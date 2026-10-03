@@ -1,0 +1,2 @@
+## Setup
+- [x] Setup connection
