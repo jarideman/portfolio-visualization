@@ -1,5 +1,6 @@
 ## Setup
 - [x] Setup connection
+- [x] Retrieve and write data to csv
 
 ## Portfolio Summary
 - [ ] Total Portfolio Value
