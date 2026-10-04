@@ -1,4 +1,4 @@
-from connection.mt5_connection import init_mt5, deinit_mt5
+from connection import init_mt5, deinit_mt5
 from sync.run_sync import sync_account_data
 from validation.missing_data import check_missing_data
 
