@@ -4,6 +4,8 @@ from validation.missing_data import check_missing_data
 import subprocess
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -11,6 +13,8 @@ API_DIR = BASE_DIR / "api"
 
 
 def main():
+    load_dotenv()
+
     if not init_mt5():
         return
 
@@ -33,9 +37,9 @@ def main():
             "--app-dir",
             str(API_DIR),
             "--host",
-            "127.0.0.1",
+            os.getenv("HOST"),
             "--port",
-            "8000",
+            os.getenv("PORT"),
         ],
         cwd=API_DIR,
     )
