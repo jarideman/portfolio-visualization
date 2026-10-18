@@ -1,8 +1,3 @@
-## Setup
-- [x] Setup connection
-- [x] Retrieve and write data to csv
-- [ ] Move api and data logic to data engine
-
 ## Portfolio Summary
 - [ ] Total Portfolio Value
 - [ ] Total P&L
