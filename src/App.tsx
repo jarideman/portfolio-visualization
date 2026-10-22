@@ -22,7 +22,7 @@ export default function App() {
   const [openPositions, setOpenPositions] = useState<OpenPosition[]>([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/postions/closed")
+    fetch("http://127.0.0.1:8000/api/postions/closed") // create hook
       .then((response) => {
         if (!response.ok) {
           throw new Error("Python API request failed");
@@ -65,7 +65,8 @@ export default function App() {
         {openPositions.map((position, index) => (
           <ScrollView horizontal key={index}>
             <Text>{position.symbol}</Text>
-
+            
+            {/* red/green/grey for profit/loss/equal */}
             <Text>{position.profit}</Text>
           </ScrollView>
         ))}

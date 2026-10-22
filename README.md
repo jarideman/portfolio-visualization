@@ -35,13 +35,13 @@
 # Trades
   ## All trades
   - [ ] Symbol
+  - [ ] Open / Closed
   - [ ] Buy / Sell
   - [ ] Quantity
   - [ ] Entry price
   - [ ] Current price
   - [ ] Exit price
   - [ ] P&L
-  - [ ] P&L (%)
   - [ ] Date
   
   ## Filtering
