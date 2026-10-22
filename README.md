@@ -1,48 +1,65 @@
-## Portfolio Summary
-- [ ] Total Portfolio Value
-- [ ] Total P&L
-- [ ] Total Return (%)
-- [ ] Today's P&L
-- [ ] Cash Balance
+# Dashboard
+  ## Portfolio Summary
+  - [ ] Total Portfolio Value
+  - [ ] Total P&L
+  - [ ] Total Return (%)
+  - [ ] Today's P&L
+  - [ ] Cash Balance
+  
+  ## Performance Chart
+  - [ ] Portfolio value over time
+  - [ ] P&L over time
+  - [ ] Time filters:
+    - [ ] 1D
+    - [ ] 1W
+    - [ ] 1M
+    - [ ] 3M
+    - [ ] 6M
+    - [ ] YTD
+    - [ ] 1Y
+    - [ ] ALL
+  
+  ## Portfolio Allocation
+  - [ ] Allocation by asset
+  - [ ] Allocation by percentage
+  - [ ] Allocation chart
 
-## Performance Chart
-- [ ] Portfolio value over time
-- [ ] P&L over time
-- [ ] Time filters:
-  - [ ] 1D
-  - [ ] 1W
-  - [ ] 1M
-  - [ ] 3M
-  - [ ] 6M
-  - [ ] YTD
-  - [ ] 1Y
-  - [ ] ALL
+  ## Risk Overview
+  - [ ] Maximum Drawdown
+  - [ ] Win Rate
+  - [ ] Profit Factor
+  - [ ] Average Win
+  - [ ] Average Loss
 
-## Portfolio Allocation
-- [ ] Allocation by asset
-- [ ] Allocation by percentage
-- [ ] Allocation chart
 
-## Open Positions
-- [ ] Symbol
-- [ ] Quantity
-- [ ] Entry price
-- [ ] Current price
-- [ ] Position value
-- [ ] P&L
-- [ ] P&L (%)
+# Trades
+  ## All trades
+  - [ ] Symbol
+  - [ ] Buy / Sell
+  - [ ] Quantity
+  - [ ] Entry price
+  - [ ] Current price
+  - [ ] Exit price
+  - [ ] P&L
+  - [ ] P&L (%)
+  - [ ] Date
+  
+  ## Filtering
+  - [ ] Symbol
+  - [ ] Open / Closed
+  - [ ] Buy / Sell
+  - [ ] Profit / Loss
 
-## Recent Trades
-- [ ] Symbol
-- [ ] Buy / Sell
-- [ ] Entry price
-- [ ] Exit price
-- [ ] P&L
-- [ ] Date
+  ## Visual
+  - [ ] Show trade in bars
 
-## Risk Overview
-- [ ] Maximum Drawdown
-- [ ] Win Rate
-- [ ] Profit Factor
-- [ ] Average Win
-- [ ] Average Loss
+
+# Account info
+  - [ ] Account number
+  - [ ] Name
+  - [ ] Leverage
+  - [ ] Balance
+  - [ ] Profit                      
+  - [ ] Server
+  - [ ] Trade allowed
+  - [ ] Trade expert enabled
