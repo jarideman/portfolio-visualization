@@ -1,56 +1,24 @@
-import { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
-
-type OpenPosition = {
-  price_open: number;
-  tp: number;
-  sl: number;
-  symbol: string;
-  profit: number;
-};
-
-type ClosedPosition = {
-  price_open: number;
-  lot_size: number;
-  profit: number;
-  symbol: string;
-};
-
+import type { ClosedPosition } from "./positions/types";
+import { useClosedPositions } from "./positions/hooks/use-closed-positions";
+import { useOpenPositions } from "./positions/hooks/use-open-positions";
 
 export default function App() {
-  const [closedPositions, setClosedPositions] = useState<ClosedPosition[]>([]);
-  const [openPositions, setOpenPositions] = useState<OpenPosition[]>([]);
+  const { data: closedPositions, isPending: isPendingClosedPositions, error: closedPositionsError} = useClosedPositions()
+  const { data: openPositions, isPending: isPendingOpenPositions, error: openPositionsError} = useOpenPositions()
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/postions/closed") // create hook
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Python API request failed");
-        }
-        return response.json();
-      })
-      .then(setClosedPositions)
-      .catch((err) => console.error(err.message));
+  if (isPendingClosedPositions || isPendingOpenPositions) return 'Loading...'
 
-    fetch("http://127.0.0.1:8000/api/postions/open")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Python API request failed");
-        }
-        return response.json();
-      })
-      .then(setOpenPositions)
-      .catch((err) => console.error(err.message));
-  }, []);
+  if (closedPositionsError || openPositionsError) return 'An error has occurred: ' + (openPositionsError?.message ?? closedPositionsError?.message)
 
   return (
-    <main style={{ padding: 24 }}>
+    <main>
       <h1>MT5 Market Data</h1>
 
       <p>Closed positions: {closedPositions.length}</p>
 
       <ScrollView>
-        {closedPositions.map((position, index) => (
+        {closedPositions.map((position: ClosedPosition, index: number) => (
           <ScrollView horizontal key={index}>
             <Text>{position.symbol}</Text>
 
@@ -62,7 +30,7 @@ export default function App() {
       <p>Open positions: {openPositions.length}</p>
 
       <ScrollView>
-        {openPositions.map((position, index) => (
+        {openPositions.map((position: OpenPosition, index: number) => (
           <ScrollView horizontal key={index}>
             <Text>{position.symbol}</Text>
             
