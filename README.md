@@ -40,7 +40,6 @@
   - [ ] Entry price
   - [ ] Current price
   - [ ] P&L
-  - [ ] P&L (%)
   - [ ] Date
 
   ## Closed trades
