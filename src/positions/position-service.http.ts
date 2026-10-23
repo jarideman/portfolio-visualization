@@ -1,15 +1,15 @@
-import http from "../shared/http-service"
+import http from "../shared/services/http-service"
 
 export const positionService = {
     async getOpenPositions() {
         const response = await http.get('positions/open')
     
-        return response
+        return response.data
     },
 
     async getClosedPositions() {
         const response = await http.get('positions/closed')
     
-        return response
+        return response.data
     },
 }
