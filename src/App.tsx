@@ -1,5 +1,5 @@
 import { ScrollView, Text } from "react-native";
-import type { ClosedPosition } from "./positions/types";
+import type { ClosedPosition, OpenPosition } from "./positions/types";
 import { useClosedPositions } from "./positions/hooks/use-closed-positions";
 import { useOpenPositions } from "./positions/hooks/use-open-positions";
 
