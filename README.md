@@ -33,19 +33,26 @@
 
 
 # Trades
-  ## Open/Closed trades
+  ## Open trades
   - [ ] Symbol
   - [ ] Buy / Sell
   - [ ] Quantity
   - [ ] Entry price
   - [ ] Current price
+  - [ ] P&L
+  - [ ] Date
+
+  ## Closed trades
+  - [ ] Symbol
+  - [ ] Buy / Sell
+  - [ ] Quantity
+  - [ ] Entry price
   - [ ] Exit price
   - [ ] P&L
   - [ ] Date
   
   ## Filtering
   - [ ] Symbol
-  - [ ] Open / Closed
   - [ ] Buy / Sell
   - [ ] Profit / Loss
 

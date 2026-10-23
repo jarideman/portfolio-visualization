@@ -1,41 +1,44 @@
-import { useEffect, useState } from "react";
-
-type Candle = {
-  time: number;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-};
+import { ScrollView, Text } from "react-native";
+import type { ClosedPosition, OpenPosition } from "./positions/types";
+import { useClosedPositions } from "./positions/hooks/use-closed-positions";
+import { useOpenPositions } from "./positions/hooks/use-open-positions";
 
 export default function App() {
-  const [candles, setCandles] = useState<Candle[]>([]);
-  const [error, setError] = useState("");
+  const { data: closedPositions, isPending: isPendingClosedPositions, error: closedPositionsError} = useClosedPositions()
+  const { data: openPositions, isPending: isPendingOpenPositions, error: openPositionsError} = useOpenPositions()
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/postions/closed")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Python API request failed");
-        }
-        return response.json();
-      })
-      .then(setCandles)
-      .catch((err) => setError(err.message));
-  }, []);
+  if (isPendingClosedPositions || isPendingOpenPositions) return 'Loading...'
+
+  if (closedPositionsError || openPositionsError) return 'An error has occurred: ' + (openPositionsError?.message ?? closedPositionsError?.message)
 
   return (
-    <main style={{ padding: 24 }}>
+    <main>
       <h1>MT5 Market Data</h1>
 
-      {error && <p>Error: {error}</p>}
+      <p>Closed positions: {closedPositions.length}</p>
 
-      <p>Candles retrieved: {candles.length}</p>
+      <ScrollView>
+        {closedPositions.map((position: ClosedPosition, index: number) => (
+          <ScrollView horizontal key={index}>
+            <Text>{position.symbol}</Text>
 
-      <pre style={{ overflowX: "auto" }}>
-        {JSON.stringify(candles.slice(-5), null, 2)}
-      </pre>
+            <Text>{position.profit}</Text>
+          </ScrollView>
+        ))}
+      </ScrollView>
+
+      <p>Open positions: {openPositions.length}</p>
+
+      <ScrollView>
+        {openPositions.map((position: OpenPosition, index: number) => (
+          <ScrollView horizontal key={index}>
+            <Text>{position.symbol}</Text>
+            
+            {/* red/green/grey for profit/loss/equal */}
+            <Text>{position.profit}</Text>
+          </ScrollView>
+        ))}
+      </ScrollView>
     </main>
   );
 }
