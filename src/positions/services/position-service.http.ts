@@ -1,4 +1,4 @@
-import http from "../shared/services/http-service"
+import http from "../../shared/services/http-service"
 
 export const positionService = {
     async getOpenPositions() {
