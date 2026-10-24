@@ -1,2 +1,0 @@
-@tanstack/react-query
-@tanstack/react-table

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { positionService } from "../position-service.http"
+import { positionService } from "../services/position-service.http"
   
 export function useOpenPositions() {
   return useQuery({

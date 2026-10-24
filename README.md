@@ -61,11 +61,11 @@
 
 
 # Account info
-  - [ ] Account number
-  - [ ] Name
-  - [ ] Leverage
-  - [ ] Balance
-  - [ ] Profit                      
-  - [ ] Server
-  - [ ] Trade allowed
-  - [ ] Trade expert enabled
+- [ ] Account number
+- [ ] Name
+- [ ] Leverage
+- [ ] Balance
+- [ ] Profit                      
+- [ ] Server
+- [ ] Trade allowed
+- [ ] Trade expert enabled
