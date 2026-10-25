@@ -1,4 +1,4 @@
-import { ScrollView, Text } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { useClosedPositions } from "../positions/hooks/use-closed-positions";
 import { useOpenPositions } from "../positions/hooks/use-open-positions";
 import type { ClosedPosition, OpenPosition } from "../positions/types";
@@ -12,10 +12,10 @@ export default function Trades() {
   if (closedPositionsError || openPositionsError) return 'An error has occurred: ' + (openPositionsError?.message ?? closedPositionsError?.message)
 
   return (
-    <main>
-      <h1>MT5 Market Data</h1>
+    <View>
+      <Text>MT5 Market Data</Text>
 
-      <p>Closed positions: {closedPositions.length}</p>
+      <Text>Closed positions: {closedPositions.length}</Text>
 
       <ScrollView>
         {closedPositions.map((position: ClosedPosition, index: number) => (
@@ -39,6 +39,6 @@ export default function Trades() {
           </ScrollView>
         ))}
       </ScrollView>
-    </main>
+    </View>
   );
 }

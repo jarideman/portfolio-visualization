@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Trades from "./pages/Trades";
 import Dashboard from "./pages/Dashboard";
-import Navbar from "./shared/Navbar";
+import Navbar from "./shared/components/Navbar";
 import AccountInfo from "./pages/AccountInfo";
 
 

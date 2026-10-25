@@ -16,6 +16,7 @@ export default function AccountInfo() {
       <Text>Name: {accountInfo.name}</Text>
       <Text>Leverage: {accountInfo.leverage}</Text>
       <Text>Balance: {accountInfo.balance}</Text>
+      <Text>Equity: {accountInfo.equity}</Text>
       {/* red/green/grey for profit/loss/equal */}
       <Text>Profit: {accountInfo.profit}</Text>
       <Text>Server: {accountInfo.server}</Text>

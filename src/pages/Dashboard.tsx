@@ -1,7 +1,12 @@
+import { Text, View } from "react-native";
+import { PersonTable } from "../shared/components/PersonTable";
+
 export default function Dashboard() {
   return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
+    <View>
+      <Text>Dashboard</Text>
+
+      <PersonTable />
+    </View>
   );
 }
