@@ -3,9 +3,10 @@ import type { ClosedPosition } from "../types";
 import { ScrollView, Text } from "react-native";
 import { Table } from "../../shared/components/Table";
 import { useOpenPositions } from "../hooks/use-open-positions";
+import ProfitText from "../../shared/components/ProfitText";
 
 export function OpenPositionsTable() {
-  const { data, isPending, error} = useOpenPositions()
+  const { data, isPending, error } = useOpenPositions()
 
   const features = tableFeatures({})
 
@@ -18,7 +19,7 @@ export function OpenPositionsTable() {
       accessorKey: 'type',
       header: 'Type',
     },
-      {
+    {
       accessorKey: 'volume',
       header: 'Volume',
     },
@@ -29,16 +30,7 @@ export function OpenPositionsTable() {
     {
       accessorKey: 'profit',
       header: 'Profit',
-      cell: (info) => {
-        const profit = info.getValue<number>()
-        
-        const color =
-          profit === 0 ? 'grey' :
-          profit > 0 ? 'green' :
-          'red';
-
-        return <Text style={{color: color}}>{profit}</Text>
-      },
+      cell: (info) => <ProfitText value={info.getValue<number>()} />,
     },
     {
       accessorKey: 'date',
@@ -56,12 +48,12 @@ export function OpenPositionsTable() {
   if (isPending) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
-  
+
   return (
     <ScrollView>
-        <Text>Open positions: {data.length}</Text>
+      <Text>Open positions: {data.length}</Text>
 
-        <Table table={openPositionsTable}/>
+      <Table table={openPositionsTable} />
     </ScrollView>
   )
 }
