@@ -25,7 +25,11 @@ export function ClosedPositionsTable() {
         },
         {
             accessorKey: 'price_open',
-            header: 'Price open',
+            header: 'Entry price',
+        },
+        {
+            accessorKey: 'price_exit',
+            header: 'Exit price',
         },
         {
             accessorKey: 'profit',

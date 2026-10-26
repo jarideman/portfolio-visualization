@@ -10,5 +10,5 @@ export default function ProfitText({ value }: Props) {
             value > 0 ? 'green' :
                 'red';
 
-    return <Text style={{ color: color }}>{value}</Text>
+    return <Text style={{ color: color }}>{value.toFixed(2)}</Text>
 }

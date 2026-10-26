@@ -25,7 +25,11 @@ export function OpenPositionsTable() {
     },
     {
       accessorKey: 'price_open',
-      header: 'Price open',
+            header: 'Entry price',
+    },
+        {
+      accessorKey: 'price_current',
+      header: 'Current price',
     },
     {
       accessorKey: 'profit',
