@@ -9,6 +9,7 @@ export default function AccountInfo() {
 
   if (error) return 'An error has occurred: ' + error.message
 
+  
   return (
     <View>
       <Text>Account info</Text>
