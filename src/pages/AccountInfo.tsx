@@ -1,7 +1,6 @@
 import { View } from "react-native";
 import { useAccountInfo } from "../account/hooks/use-account-info";
-import ProfitText from "../shared/components/ProfitText";
-import { Text } from "@mantine/core";
+import { DataList, Text } from "@mantine/core";
 
 export default function AccountInfo() {
   const { data: accountInfo, isPending, error } = useAccountInfo()
@@ -10,20 +9,29 @@ export default function AccountInfo() {
 
   if (error) return 'An error has occurred: ' + error.message
 
-  
+  const data = [
+    { label: 'Account number', value: accountInfo.login },
+    { label: 'Name', value: accountInfo.name },
+    { label: 'Leverage', value: accountInfo.leverage },
+    { label: 'Balance', value: accountInfo.balance },
+    { label: 'Equity', value: accountInfo.equity },
+    { label: 'Server', value: accountInfo.server },
+    { label: 'Trade allowed', value: String(accountInfo.trade_allowed) },
+    { label: 'Trade expert enabled', value: String(accountInfo.trade_expert) },
+  ];
+
   return (
     <View>
       <Text>Account info</Text>
 
-      <Text>Account number: {accountInfo.login}</Text>
-      <Text>Name: {accountInfo.name}</Text>
-      <Text>Leverage: {accountInfo.leverage}</Text>
-      <Text>Balance: {accountInfo.balance}</Text>
-      <Text>Equity: {accountInfo.equity}</Text>
-      <Text>Profit: <ProfitText value={accountInfo.profit} /></Text>
-      <Text>Server: {accountInfo.server}</Text>
-      <Text>Trade allowed: {String(accountInfo.trade_allowed)}</Text>
-      <Text>Trade expert enabled: {String(accountInfo.trade_expert)}</Text>
+      <DataList>
+        {data.map((item) => (
+          <DataList.Item key={item.label}>
+            <DataList.ItemLabel>{item.label}</DataList.ItemLabel>
+            <DataList.ItemValue>{item.value}</DataList.ItemValue>
+          </DataList.Item>
+        ))}
+      </DataList>
     </View>
   );
 }

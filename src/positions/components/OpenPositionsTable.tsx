@@ -50,7 +50,6 @@ export function OpenPositionsTable() {
     data,
   })
 
-
   if (isPending) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
