@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text } from '@mantine/core';
 
 type Props = {
     value: number
@@ -6,9 +6,16 @@ type Props = {
 
 export default function ProfitText({ value }: Props) {
     const color =
-        value === 0 ? 'grey' :
-            value > 0 ? 'green' :
-                'red';
+        value === 0
+            ? 'gray.6'
+            : value > 0
+                ? 'green.6'
+                : 'red.6';
 
-    return <Text style={{ color: color }}>{value.toFixed(2)}</Text>
+
+    return (
+        <Text component="span" c={color}>
+            {value.toFixed(2)}
+        </Text>
+    );
 }
