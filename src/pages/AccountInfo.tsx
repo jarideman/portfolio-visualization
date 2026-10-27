@@ -1,6 +1,7 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { useAccountInfo } from "../account/hooks/use-account-info";
 import ProfitText from "../shared/components/ProfitText";
+import { Text } from "@mantine/core";
 
 export default function AccountInfo() {
   const { data: accountInfo, isPending, error } = useAccountInfo()

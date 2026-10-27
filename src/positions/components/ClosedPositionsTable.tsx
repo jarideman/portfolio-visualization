@@ -1,9 +1,10 @@
 import { tableFeatures, useTable, type ColumnDef } from "@tanstack/react-table";
 import type { ClosedPosition } from "../types";
-import { ScrollView, Text } from "react-native";
+import { ScrollView } from "react-native";
 import { Table } from "../../shared/components/Table";
 import { useClosedPositions } from "../hooks/use-closed-positions";
 import ProfitText from "../../shared/components/ProfitText";
+import { Text } from "@mantine/core";
 
 export function ClosedPositionsTable() {
     const { data, isPending, error } = useClosedPositions()

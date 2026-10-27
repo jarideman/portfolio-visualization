@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/charts": "^9.7.4",
+    "@mantine/core": "^9.7.4",
+    "@mantine/hooks": "^9.7.4",
     "@tanstack/react-query": "^5.104.5",
     "@tanstack/react-table": "^9.3.1",
     "axios": "^1.20.0",
@@ -19,7 +22,8 @@
     "react-dom": "^19.2.8",
     "react-native": "^0.88.0",
     "react-native-web": "^0.21.4",
-    "react-router-dom": "^7.18.4"
+    "react-router-dom": "^7.18.4",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
