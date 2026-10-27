@@ -55,7 +55,8 @@
   - [ ] Symbol
   - [ ] Buy / Sell
   - [ ] Profit / Loss
-
+  - [ ] Date
+ 
   ## Visual
   - [ ] Show trade in bars
 

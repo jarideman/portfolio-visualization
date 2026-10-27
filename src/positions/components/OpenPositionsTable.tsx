@@ -1,10 +1,10 @@
 import { tableFeatures, useTable, type ColumnDef } from "@tanstack/react-table";
-import type { ClosedPosition } from "../types";
+import type { ClosedPosition, OpenPosition } from "../types";
 import { ScrollView } from "react-native";
 import { Table } from "../../shared/components/Table";
 import { useOpenPositions } from "../hooks/use-open-positions";
 import ProfitText from "../../shared/components/ProfitText";
-import { Text } from "@mantine/core";
+import { Badge, Text } from "@mantine/core";
 
 export function OpenPositionsTable() {
   const { data, isPending, error } = useOpenPositions()
@@ -26,9 +26,9 @@ export function OpenPositionsTable() {
     },
     {
       accessorKey: 'price_open',
-            header: 'Entry price',
+      header: 'Entry price',
     },
-        {
+    {
       accessorKey: 'price_current',
       header: 'Current price',
     },
@@ -50,13 +50,22 @@ export function OpenPositionsTable() {
     data,
   })
 
+
   if (isPending) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
 
+  const badges: Array<string> = [...new Set<string>(data.map((item: OpenPosition) => item.symbol))]
+
   return (
     <ScrollView>
       <Text>Open positions: {data.length}</Text>
+
+      <ScrollView horizontal>
+        {badges.map((value: string, index: number) => (
+          <Badge key={index}>{value}</Badge>
+        ))}
+      </ScrollView>
 
       <Table table={openPositionsTable} />
     </ScrollView>

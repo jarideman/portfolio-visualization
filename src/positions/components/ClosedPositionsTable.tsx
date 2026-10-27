@@ -4,7 +4,7 @@ import { ScrollView } from "react-native";
 import { Table } from "../../shared/components/Table";
 import { useClosedPositions } from "../hooks/use-closed-positions";
 import ProfitText from "../../shared/components/ProfitText";
-import { Text } from "@mantine/core";
+import { Badge, Text } from "@mantine/core";
 
 export function ClosedPositionsTable() {
     const { data, isPending, error } = useClosedPositions()
@@ -54,9 +54,18 @@ export function ClosedPositionsTable() {
 
     if (error) return 'An error has occurred: ' + error.message
 
+    const badges: Array<string> = [...new Set<string>(data.map((item: ClosedPosition) => item.symbol))]
+
     return (
         <ScrollView>
             <Text>Closed positions: {data.length}</Text>
+
+
+            <ScrollView horizontal>
+                {badges.map((value: string, index: number) => (
+                    <Badge key={index}>{value}</Badge>
+                ))}
+            </ScrollView>
 
             <Table table={closedPositionsTable} />
         </ScrollView>
