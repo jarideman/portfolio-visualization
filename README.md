@@ -5,7 +5,7 @@
   - [ ] Total Return (%)
   - [ ] Today's P&L
   - [ ] Cash Balance
-  
+
   ## Performance Chart
   - [ ] Portfolio value over time
   - [ ] P&L over time
@@ -18,7 +18,7 @@
     - [ ] YTD
     - [ ] 1Y
     - [ ] ALL
-  
+
   ## Portfolio Allocation
   - [ ] Allocation by asset
   - [ ] Allocation by percentage
@@ -50,13 +50,18 @@
   - [ ] Exit price
   - [ ] P&L
   - [ ] Date
-  
+
   ## Filtering
   - [ ] Symbol
   - [ ] Buy / Sell
   - [ ] Profit / Loss
   - [ ] Date
- 
+
+  ## Sorting
+  - [ ] Volume
+  - [ ] Profit / Loss
+  - [ ] Date
+
   ## Visual
   - [ ] Show trade in bars
 
@@ -66,7 +71,7 @@
 - [ ] Name
 - [ ] Leverage
 - [ ] Balance
-- [ ] Profit                      
+- [ ] Profit
 - [ ] Server
 - [ ] Trade allowed
 - [ ] Trade expert enabled
