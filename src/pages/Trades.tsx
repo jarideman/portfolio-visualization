@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { ClosedPositionsTable } from "../positions/components/ClosedPositionsTable";
 import { OpenPositionsTable } from "../positions/components/OpenPositionsTable";
-import { Tabs, Text, Badge } from "@mantine/core";
+import { Tabs, Text } from "@mantine/core";
 
 export default function Trades() {
   return (

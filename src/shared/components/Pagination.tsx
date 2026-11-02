@@ -1,104 +1,58 @@
-type PaginationTable = {
-  firstPage: () => void;
-  previousPage: () => void;
-  nextPage: () => void;
-  lastPage: () => void;
-  getCanPreviousPage: () => boolean;
-  getCanNextPage: () => boolean;
-  getCanLastPage: () => boolean;
-  getPageCount: () => number;
-  setPageIndex: (index: number) => void;
-  setPageSize: (size: number) => void;
-  getRowModel: () => {
-    rows: unknown[];
-  };
-  getRowCount: () => number;
-  state: {
-    pagination: {
-      pageIndex: number;
-      pageSize: number;
+import { Group, Pagination as MantinePagination, Select, Text } from '@mantine/core';
+
+type Props = {
+  table: {
+    getRowModel: () => { rows: unknown[] };
+    getRowCount: () => number;
+    getPageCount: () => number;
+    setPageIndex: (index: number) => void;
+    setPageSize: (size: number) => void;
+    state: {
+      pagination: {
+        pageIndex: number;
+        pageSize: number;
+      };
     };
   };
 };
 
-type Props<TTable extends PaginationTable> = {
-  table: TTable;
-};
-
-export function Pagination<TTable extends PaginationTable>({
-  table,
-}: Props<TTable>) {
-  const pageIndex = table.state.pagination.pageIndex;
-  const pageSize = table.state.pagination.pageSize;
+export function Pagination({ table }: Props) {
+  const { pageIndex, pageSize } = table.state.pagination;
   const pageCount = table.getPageCount();
 
   return (
-    <>
-      <div className="controls">
-        <button
-          onClick={() => table.firstPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<<'}
-        </button>
+    <Group justify="space-between" align="center">
+      <Text size="sm" c="dimmed">
+        Showing {table.getRowModel().rows.length} of {table.getRowCount()} rows
+      </Text>
 
-        <button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<'}
-        </button>
+      <Group gap="md">
+        <Text size="sm">
+          Page {pageCount > 0 ? pageIndex + 1 : 0} of {pageCount}
+        </Text>
 
-        <button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {'>'}
-        </button>
-
-        <button
-          onClick={() => table.lastPage()}
-          disabled={!table.getCanLastPage()}
-        >
-          {'>>'}
-        </button>
-
-        <span>
-          Page <strong>{pageIndex + 1} of {pageCount}</strong>
-        </span>
-
-        <input
-          type="number"
-          min={1}
-          max={pageCount}
+        <MantinePagination
+          total={pageCount}
           value={pageIndex + 1}
-          onChange={(e) => {
-            const page = Number(e.target.value) - 1;
-
-            if (Number.isFinite(page)) {
-              table.setPageIndex(
-                Math.max(0, Math.min(page, pageCount - 1))
-              );
-            }
-          }}
+          onChange={(page) => table.setPageIndex(page - 1)}
+          disabled={pageCount === 0}
+          size="sm"
         />
+      </Group>
 
-        <select
-          value={pageSize}
-          onChange={(e) => table.setPageSize(Number(e.target.value))}
-        >
-          {[10, 20, 30, 40, 50].map((size) => (
-            <option key={size} value={size}>
-              Show {size}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        Showing {table.getRowModel().rows.length} of{' '}
-        {table.getRowCount()} Rows
-      </div>
-    </>
+      <Select
+        w={110}
+        size="sm"
+        value={String(pageSize)}
+        onChange={(value) => {
+          if (value) table.setPageSize(Number(value));
+        }}
+        data={['10', '20', '30', '40', '50'].map((size) => ({
+          value: size,
+          label: `${size} / page`,
+        }))}
+        allowDeselect={false}
+      />
+    </Group>
   );
 }
