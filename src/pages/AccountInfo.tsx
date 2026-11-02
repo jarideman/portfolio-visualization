@@ -22,8 +22,6 @@ export default function AccountInfo() {
 
   return (
     <View>
-      <Text>Account info</Text>
-
       <DataList>
         {data.map((item) => (
           <DataList.Item key={item.label}>
