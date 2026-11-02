@@ -1,17 +1,15 @@
-import { tableFeatures, useTable, type ColumnDef } from "@tanstack/react-table";
 import type { ClosedPosition } from "../types";
 import { ScrollView } from "react-native";
 import { Table } from "../../shared/components/Table";
 import { useClosedPositions } from "../hooks/use-closed-positions";
 import ProfitText from "../../shared/components/ProfitText";
 import { Badge, Text } from "@mantine/core";
+import type { ColumnDef, TableFeatures } from "@tanstack/react-table";
 
 export function ClosedPositionsTable() {
   const { data, isPending, error } = useClosedPositions()
 
-  const features = tableFeatures({})
-
-  const columns: Array<ColumnDef<typeof features, ClosedPosition>> = [
+  const columns: ColumnDef<TableFeatures, ClosedPosition>[] = [
     {
       accessorKey: 'symbol',
       header: 'Symbol',
@@ -43,13 +41,6 @@ export function ClosedPositionsTable() {
     },
   ]
 
-  const closedPositionsTable = useTable({
-    key: 'closed-positions-table',
-    features,
-    columns,
-    data,
-  })
-
   if (isPending) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
@@ -66,7 +57,7 @@ export function ClosedPositionsTable() {
         ))}
       </ScrollView>
 
-      <Table table={closedPositionsTable} />
+      <Table key="closed-positions-table" data={data} columns={columns} />
     </ScrollView>
   )
 }

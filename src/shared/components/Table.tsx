@@ -1,22 +1,36 @@
 import { ScrollArea, Table as MantineTable } from '@mantine/core';
 import {
+  createPaginatedRowModel,
+  rowPaginationFeature,
   flexRender,
+  tableFeatures,
+  useTable,
   type RowData,
+  type ColumnDef,
   type TableFeatures,
-  type Table as TanStackTable,
 } from '@tanstack/react-table';
+import { Pagination } from './Pagination';
 
-type Props<
-  TFeatures extends TableFeatures,
-  TData extends RowData,
-> = {
-  table: TanStackTable<TFeatures, TData>;
+type Props<TData extends RowData> = {
+  key: string
+  data: TData[];
+  columns: ColumnDef<TableFeatures, TData, unknown>[];
 };
 
-export function Table<
-  TFeatures extends TableFeatures,
-  TData extends RowData,
->({ table }: Props<TFeatures, TData>) {
+export function Table<TData extends RowData>({ key, data, columns }: Props<TData>) {
+  const features = tableFeatures({
+    rowPaginationFeature,
+    paginatedRowModel: createPaginatedRowModel(),
+  })
+
+  const table = useTable({
+    key: key,
+    features,
+    columns,
+    data,
+  })
+
+
   return (
     <ScrollArea>
       <MantineTable
@@ -33,9 +47,9 @@ export function Table<
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
                 </MantineTable.Th>
               ))}
             </MantineTable.Tr>
@@ -67,6 +81,8 @@ export function Table<
           )}
         </MantineTable.Tbody>
       </MantineTable>
+
+      <Pagination table={table} />
     </ScrollArea>
   );
 }

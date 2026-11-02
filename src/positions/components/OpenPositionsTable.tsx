@@ -1,17 +1,15 @@
-import { tableFeatures, useTable, type ColumnDef } from "@tanstack/react-table";
-import type { ClosedPosition, OpenPosition } from "../types";
+import type { OpenPosition } from "../types";
 import { ScrollView } from "react-native";
 import { Table } from "../../shared/components/Table";
 import { useOpenPositions } from "../hooks/use-open-positions";
 import ProfitText from "../../shared/components/ProfitText";
 import { Badge, Text } from "@mantine/core";
+import type { ColumnDef, TableFeatures } from "@tanstack/react-table";
 
 export function OpenPositionsTable() {
   const { data, isPending, error } = useOpenPositions()
 
-  const features = tableFeatures({})
-
-  const columns: Array<ColumnDef<typeof features, ClosedPosition>> = [
+  const columns: ColumnDef<TableFeatures, OpenPosition>[] = [
     {
       accessorKey: 'symbol',
       header: 'Symbol',
@@ -43,13 +41,6 @@ export function OpenPositionsTable() {
     },
   ]
 
-  const openPositionsTable = useTable({
-    key: 'open-positions-table',
-    features,
-    columns,
-    data,
-  })
-
   if (isPending) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
@@ -66,7 +57,7 @@ export function OpenPositionsTable() {
         ))}
       </ScrollView>
 
-      <Table table={openPositionsTable} />
+      <Table key="open-positions-table" data={data} columns={columns} />
     </ScrollView>
   )
 }
