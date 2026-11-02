@@ -1,31 +1,88 @@
-export function Table({ table }) {
-  return (
-    <table>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id}>
-                {header.isPlaceholder ? null : (
-                  <table.FlexRender header={header} />
-                )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
+import { ScrollArea, Table as MantineTable } from '@mantine/core';
+import {
+  createPaginatedRowModel,
+  rowPaginationFeature,
+  flexRender,
+  tableFeatures,
+  useTable,
+  type RowData,
+  type ColumnDef,
+  type TableFeatures,
+} from '@tanstack/react-table';
+import { Pagination } from './Pagination';
 
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getAllCells().map((cell) => (
-              <td key={cell.id}>
-                <table.FlexRender cell={cell} />
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  )
+type Props<TData extends RowData> = {
+  key: string
+  data: TData[];
+  columns: ColumnDef<TableFeatures, TData, unknown>[];
+};
+
+export function Table<TData extends RowData>({ key, data, columns }: Props<TData>) {
+  const features = tableFeatures({
+    rowPaginationFeature,
+    paginatedRowModel: createPaginatedRowModel(),
+  })
+
+  const table = useTable({
+    key: key,
+    features,
+    columns,
+    data,
+  })
+
+
+  return (
+    <ScrollArea>
+      <MantineTable
+        striped
+        highlightOnHover
+        withTableBorder
+        withColumnBorders
+      >
+        <MantineTable.Thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <MantineTable.Tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <MantineTable.Th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                </MantineTable.Th>
+              ))}
+            </MantineTable.Tr>
+          ))}
+        </MantineTable.Thead>
+
+        <MantineTable.Tbody>
+          {table.getRowModel().rows.length > 0 ? (
+            table.getRowModel().rows.map((row) => (
+              <MantineTable.Tr key={row.id}>
+                {row.getAllCells().map((cell) => (
+                  <MantineTable.Td key={cell.id}>
+                    {flexRender(
+                      cell.column.columnDef.cell,
+                      cell.getContext(),
+                    )}
+                  </MantineTable.Td>
+                ))}
+              </MantineTable.Tr>
+            ))
+          ) : (
+            <MantineTable.Tr>
+              <MantineTable.Td
+                colSpan={table.getAllLeafColumns().length}
+              >
+                No records found.
+              </MantineTable.Td>
+            </MantineTable.Tr>
+          )}
+        </MantineTable.Tbody>
+      </MantineTable>
+
+      <Pagination table={table} />
+    </ScrollArea>
+  );
 }
