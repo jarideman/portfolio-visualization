@@ -3,7 +3,7 @@ import { ScrollView } from "react-native";
 import { Table } from "../../shared/components/Table";
 import { useClosedPositions } from "../hooks/use-closed-positions";
 import ProfitText from "../../shared/components/ProfitText";
-import { Badge, Text } from "@mantine/core";
+import { Badge } from "@mantine/core";
 import type { ColumnDef, TableFeatures } from "@tanstack/react-table";
 
 export function ClosedPositionsTable() {
@@ -49,8 +49,6 @@ export function ClosedPositionsTable() {
 
   return (
     <ScrollView>
-      <Text>Closed positions: {data.length}</Text>
-
       <ScrollView horizontal>
         {badges.map((value: string, index: number) => (
           <Badge key={index}>{value}</Badge>

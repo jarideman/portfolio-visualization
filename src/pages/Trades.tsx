@@ -1,13 +1,11 @@
 import { View } from "react-native";
 import { ClosedPositionsTable } from "../positions/components/ClosedPositionsTable";
 import { OpenPositionsTable } from "../positions/components/OpenPositionsTable";
-import { Tabs, Text } from "@mantine/core";
+import { Tabs } from "@mantine/core";
 
 export default function Trades() {
   return (
     <View>
-      <Text>MT5 Market Data</Text>
-
       <Tabs defaultValue="open">
         <Tabs.List>
           <Tabs.Tab value="open">
