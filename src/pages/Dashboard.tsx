@@ -66,11 +66,6 @@ export default function Dashboard() {
 
   if (error) return 'An error has occurred: ' + error.message
 
-  const chartData = piechartdata.allocation.map((item) => ({
-    name: item.symbol,
-    value: item.percentage,
-  }));
-
   return (
     <View>
       <LineChart
@@ -88,7 +83,7 @@ export default function Dashboard() {
 
       <CandlestickChart h={300} data={candlestickdata} dataKey="date" />
 
-      <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={chartData} withLegend />
+      <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={piechartdata} withLegend />
     </View>
   );
 }
