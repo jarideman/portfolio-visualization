@@ -1,14 +1,9 @@
 import { View } from "react-native";
-import { Text } from "@mantine/core";
 import { CandlestickChart, LineChart, PieChart } from "@mantine/charts";
+import { useAllocations } from "../dashboard/hooks/use-closed-positions";
 
 export default function Dashboard() {
-  const piechartdata = [
-    { name: 'USA', value: 400, color: 'indigo.6' },
-    { name: 'India', value: 300, color: 'yellow.6' },
-    { name: 'Japan', value: 300, color: 'teal.6' },
-    { name: 'Other', value: 200, color: 'gray.6' },
-  ];
+  const { data: piechartdata, isPending, error } = useAllocations()
 
   const candlestickdata = [
     { date: 'Mar 01', open: 136, high: 142, low: 133, close: 140 },
@@ -67,6 +62,15 @@ export default function Dashboard() {
     },
   ];
 
+  if (isPending) return 'Loading...'
+
+  if (error) return 'An error has occurred: ' + error.message
+
+  const chartData = piechartdata.allocation.map((item) => ({
+    name: item.symbol,
+    value: item.percentage,
+  }));
+
   return (
     <View>
       <LineChart
@@ -82,9 +86,9 @@ export default function Dashboard() {
         withDots={false}
       />
 
-      <CandlestickChart h={300} data={candlestickdata} dataKey="date" />;
+      <CandlestickChart h={300} data={candlestickdata} dataKey="date" />
 
-      <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={piechartdata} withLegend />
+      <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={chartData} withLegend />
     </View>
   );
 }
