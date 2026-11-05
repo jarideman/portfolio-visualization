@@ -4,8 +4,6 @@
   color: #f9fafb;
 }
 
-/* Header */
-
 .account-header {
   display: flex;
   align-items: center;
@@ -55,45 +53,11 @@
   margin-top: 4px;
 }
 
-/* Account cards */
-
 .card-title {
   color: #f9fafb;
   font-size: 15px;
   font-weight: 600;
 }
-
-.account-divider {
-  border-color: #263247;
-}
-
-/* Details */
-
-.detail-row,
-.permission-row {
-  padding: 16px 0;
-  border-bottom: 1px solid #263247;
-}
-
-.detail-row:last-child,
-.permission-row:last-child {
-  border-bottom: none;
-}
-
-.detail-label {
-  color: #94a3b8;
-  font-size: 13px;
-}
-
-.detail-value {
-  color: #f9fafb;
-  font-size: 13px;
-  font-weight: 500;
-  text-align: right;
-  overflow-wrap: anywhere;
-}
-
-/* Responsive */
 
 @media (max-width: 600px) {
   .account-header {

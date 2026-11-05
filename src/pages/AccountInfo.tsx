@@ -4,7 +4,6 @@ import {
   Group,
   Stack,
   Text,
-  Badge,
   Divider,
   ThemeIcon,
   Alert,
@@ -21,14 +20,12 @@ import {
 } from "lucide-react";
 
 import { useAccountInfo } from "../account/hooks/use-account-info";
+
+import { DetailRow } from "../shared/components/DetailRow";
+import { StatusBadge } from "../shared/components/StatusBadge";
+
 import "./AccountInfo.css";
 
-function formatAmount(value: number) {
-  return new Intl.NumberFormat("nl-NL", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-}
 
 interface StatCardProps {
   label: string;
@@ -67,36 +64,6 @@ function StatCard({
   );
 }
 
-interface StatusBadgeProps {
-  enabled: boolean;
-}
-
-function StatusBadge({ enabled }: StatusBadgeProps) {
-  return (
-    <Badge color={enabled ? "green" : "red"} variant="light">
-      {enabled ? "Enabled" : "Disabled"}
-    </Badge>
-  );
-}
-
-interface DetailRowProps {
-  label: string;
-  value?: string | number;
-  customValue?: React.ReactNode;
-}
-
-function DetailRow({ label, value, customValue }: DetailRowProps) {
-  return (
-    <Group justify="space-between" className="detail-row">
-      <Text className="detail-label">{label}</Text>
-
-      {customValue ?? (
-        <Text className="detail-value">{value}</Text>
-      )}
-    </Group>
-  );
-}
-
 export default function AccountInfo() {
   const {
     data: accountInfo,
@@ -109,6 +76,7 @@ export default function AccountInfo() {
       <div className="account-page">
         <Stack gap="lg">
           <Skeleton height={35} width={220} />
+
           <SimpleGrid cols={{ base: 1, sm: 3 }}>
             <Skeleton height={150} radius="lg" />
             <Skeleton height={150} radius="lg" />
@@ -147,14 +115,14 @@ export default function AccountInfo() {
   const stats: StatCardProps[] = [
     {
       label: "Balance",
-      value: formatAmount(Number(accountInfo.balance)),
+      value: accountInfo.balance.toFixed(2),
       description: "Account balance",
       icon: Wallet,
       color: "blue",
     },
     {
       label: "Equity",
-      value: formatAmount(Number(accountInfo.equity)),
+      value: accountInfo.equity.toFixed(2),
       description: "Current account equity",
       icon: ChartNoAxesCombined,
       color: "green",
@@ -173,7 +141,7 @@ export default function AccountInfo() {
       <div className="account-header">
         <div>
           <h1>Account Overview</h1>
-          <p>Manage and monitor your trading account</p>
+          <p>Monitor your trading account</p>
         </div>
       </div>
 
