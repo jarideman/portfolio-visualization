@@ -71,46 +71,9 @@ export default function AccountInfo() {
     error,
   } = useAccountInfo();
 
-  if (isPending) {
-    return (
-      <div className="account-page">
-        <Stack gap="lg">
-          <Skeleton height={35} width={220} />
+  if (isPending) return 'Loading...'
 
-          <SimpleGrid cols={{ base: 1, sm: 3 }}>
-            <Skeleton height={150} radius="lg" />
-            <Skeleton height={150} radius="lg" />
-            <Skeleton height={150} radius="lg" />
-          </SimpleGrid>
-
-          <SimpleGrid cols={{ base: 1, md: 2 }}>
-            <Skeleton height={230} radius="lg" />
-            <Skeleton height={230} radius="lg" />
-          </SimpleGrid>
-        </Stack>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <Alert
-        color="red"
-        title="Unable to load account"
-        icon={<AlertCircle size={18} />}
-      >
-        {error.message}
-      </Alert>
-    );
-  }
-
-  if (!accountInfo) {
-    return (
-      <Alert color="yellow" title="No account information available">
-        No account data was returned.
-      </Alert>
-    );
-  }
+  if (error) return 'An error has occurred: ' + error.message
 
   const stats: StatCardProps[] = [
     {
@@ -136,11 +99,30 @@ export default function AccountInfo() {
     },
   ];
 
+  const accountDetail = [
+    {
+      label: "Account number",
+      value: accountInfo.login
+    },
+    {
+      label: "Name",
+      value: accountInfo.name
+    },
+    {
+      label: "Server",
+      value: accountInfo.server
+    },
+    {
+      label: "Leverage",
+      value: `1:${accountInfo.leverage}`
+    },
+  ];
+
   return (
     <div className="account-page">
       <div className="account-header">
         <div>
-          <h1>Account Overview</h1>
+          <h1>Account info</h1>
           <p>Monitor your trading account</p>
         </div>
       </div>
@@ -168,28 +150,10 @@ export default function AccountInfo() {
             <Text className="card-title">Account Details</Text>
           </Group>
 
-          <Divider className="account-divider" />
+          <Divider />
 
           <Stack gap={0}>
-            <DetailRow
-              label="Account number"
-              value={accountInfo.login}
-            />
-
-            <DetailRow
-              label="Name"
-              value={accountInfo.name}
-            />
-
-            <DetailRow
-              label="Server"
-              value={accountInfo.server}
-            />
-
-            <DetailRow
-              label="Leverage"
-              value={`1:${accountInfo.leverage}`}
-            />
+            {accountDetail.map(detail => <DetailRow label={detail.label} value={detail.value} />)}
           </Stack>
         </Card>
 
@@ -204,7 +168,7 @@ export default function AccountInfo() {
             </Text>
           </Group>
 
-          <Divider className="account-divider" />
+          <Divider />
 
           <Stack gap={0}>
             <DetailRow

@@ -58,18 +58,3 @@
   font-size: 15px;
   font-weight: 600;
 }
-
-@media (max-width: 600px) {
-  .account-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .account-header h1 {
-    font-size: 22px;
-  }
-
-  .stat-value {
-    font-size: 24px;
-  }
-}
