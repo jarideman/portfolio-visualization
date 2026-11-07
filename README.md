@@ -67,11 +67,11 @@
 
 
 # Account info
-- [ ] Account number
-- [ ] Name
-- [ ] Leverage
-- [ ] Balance
-- [ ] Profit
-- [ ] Server
-- [ ] Trade allowed
-- [ ] Trade expert enabled
+- [x] Account number
+- [x] Name
+- [x] Leverage
+- [x] Balance
+- [x] Equity
+- [x] Server
+- [x] Trade allowed
+- [x] Trade expert enabled
