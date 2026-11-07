@@ -4,6 +4,7 @@ import {
   Group,
   Stack,
   Text,
+  Title,
   Divider,
   ThemeIcon,
 } from "@mantine/core";
@@ -20,16 +21,18 @@ import { useAccountInfo } from "../account/hooks/use-account-info";
 
 import { DetailRow } from "../shared/components/DetailRow";
 import { StatusBadge } from "../shared/components/StatusBadge";
-
-import "./AccountInfo.css";
-import { StatCard } from "../shared/components/StatValue";
+import { StatCard } from "../shared/components/StatCard";
 
 export default function AccountInfo() {
   const { data: accountInfo, isPending, error } = useAccountInfo();
 
-  if (isPending) return "Loading...";
+  if (isPending) {
+    return <Text c="dimmed">Loading account information...</Text>;
+  }
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) {
+    return <Text c="red">{error.message}</Text>;
+  }
 
   const stats = [
     {
@@ -55,7 +58,7 @@ export default function AccountInfo() {
     },
   ];
 
-  const accountDetail = [
+  const accountDetails = [
     {
       label: "Account number",
       value: accountInfo.login,
@@ -74,64 +77,115 @@ export default function AccountInfo() {
     },
   ];
 
-  return (
-    <div className="account-page">
-      <div className="account-header">
-        <div>
-          <h1>Account info</h1>
-          <p>Monitor your trading account</p>
-        </div>
-      </div>
+  const cardProps = {
+    bg: "dark.7",
+    c: "gray.0",
+    radius: "lg",
+    p: "lg",
+    withBorder: true,
+    style: {
+      borderColor: "#263247",
+    },
+  };
 
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg" mb="lg">
+  return (
+    <Stack w="100%" mih="100vh" gap="xl">
+
+      <Stack gap={4}>
+        <Title order={1} size="26px" c="gray.0">
+          Account info
+        </Title>
+
+        <Text c="dimmed" size="sm">
+          Monitor your trading account
+        </Text>
+      </Stack>
+
+      <SimpleGrid
+        cols={{
+          base: 1,
+          sm: 2,
+          lg: 3,
+        }}
+        spacing="lg"
+      >
         {stats.map((stat) => (
           <StatCard key={stat.label} {...stat} />
         ))}
       </SimpleGrid>
 
-      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="lg">
-        <Card className="account-info-card" radius="lg" padding="lg">
+      <SimpleGrid
+        cols={{
+          base: 1,
+          md: 2,
+        }}
+        spacing="lg"
+      >
+        <Card {...cardProps}>
           <Group gap="sm" mb="md">
-            <ThemeIcon color="blue" variant="light" size="lg">
+            <ThemeIcon
+              color="blue"
+              variant="light"
+              size="lg"
+              radius="md"
+            >
               <UserRound size={19} />
             </ThemeIcon>
 
-            <Text className="card-title">Account Details</Text>
+            <Text fw={600} size="md">
+              Account Details
+            </Text>
           </Group>
 
-          <Divider />
+          <Divider color="dark.4" mb="xs" />
 
           <Stack gap={0}>
-            {accountDetail.map((detail) => (
-              <DetailRow label={detail.label} value={detail.value} />
+            {accountDetails.map((detail) => (
+              <DetailRow
+                key={detail.label}
+                label={detail.label}
+                value={detail.value}
+              />
             ))}
           </Stack>
         </Card>
 
-        <Card className="account-info-card" radius="lg" padding="lg">
+        <Card {...cardProps}>
           <Group gap="sm" mb="md">
-            <ThemeIcon color="blue" variant="light" size="lg">
+            <ThemeIcon
+              color="blue"
+              variant="light"
+              size="lg"
+              radius="md"
+            >
               <ShieldCheck size={19} />
             </ThemeIcon>
 
-            <Text className="card-title">Trading Permissions</Text>
+            <Text fw={600} size="md">
+              Trading Permissions
+            </Text>
           </Group>
 
-          <Divider />
+          <Divider color="dark.4" mb="xs" />
 
           <Stack gap={0}>
             <DetailRow
               label="Trading allowed"
-              customValue={<StatusBadge enabled={accountInfo.trade_allowed} />}
+              customValue={
+                <StatusBadge enabled={accountInfo.trade_allowed} />
+              }
             />
 
             <DetailRow
               label="Expert Advisor"
-              customValue={<StatusBadge enabled={accountInfo.trade_expert} />}
+              customValue={
+                <StatusBadge enabled={accountInfo.trade_expert} />
+              }
             />
           </Stack>
         </Card>
+
       </SimpleGrid>
-    </div>
+    </Stack>
   );
 }

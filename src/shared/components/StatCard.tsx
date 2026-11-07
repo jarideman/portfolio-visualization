@@ -1,6 +1,10 @@
-import { Card, Group, Text, ThemeIcon } from "@mantine/core";
-
-import "./StatCard.css";
+import {
+  Card,
+  Group,
+  Stack,
+  Text,
+  ThemeIcon,
+} from "@mantine/core";
 
 type StatCardProps = {
   label: string;
@@ -18,9 +22,20 @@ export function StatCard({
   iconColor,
 }: StatCardProps) {
   return (
-    <Card className="account-stat-card" radius="lg" padding="lg">
+    <Card
+      bg="dark.7"
+      c="gray.0"
+      radius="lg"
+      p="lg"
+      withBorder
+      style={{
+        borderColor: "#263247",
+      }}
+    >
       <Group justify="space-between" align="center">
-        <Text className="stat-label">{label}</Text>
+        <Text c="dimmed" size="sm" fw={500}>
+          {label}
+        </Text>
 
         <ThemeIcon
           size={42}
@@ -32,9 +47,22 @@ export function StatCard({
         </ThemeIcon>
       </Group>
 
-      <Text className="stat-value">{value}</Text>
+      <Stack gap={4} mt="lg">
+        <Text
+          c="gray.0"
+          size="27px"
+          fw={700}
+          style={{
+            letterSpacing: "-0.5px",
+          }}
+        >
+          {value}
+        </Text>
 
-      <Text className="stat-description">{description}</Text>
+        <Text c="dimmed" size="xs">
+          {description}
+        </Text>
+      </Stack>
     </Card>
   );
 }
