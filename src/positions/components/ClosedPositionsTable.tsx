@@ -21,6 +21,7 @@ export function ClosedPositionsTable() {
     {
       accessorKey: 'volume',
       header: 'Volume',
+      enableSorting: true,
     },
     {
       accessorKey: 'price_open',
@@ -34,10 +35,12 @@ export function ClosedPositionsTable() {
       accessorKey: 'profit',
       header: 'Profit',
       cell: (info) => <ProfitText value={info.getValue<number>()} />,
+      enableSorting: true,
     },
     {
       accessorKey: 'date',
       header: 'Date',
+      enableSorting: true,
     },
   ]
 
@@ -51,11 +54,11 @@ export function ClosedPositionsTable() {
     <ScrollView>
       <ScrollView horizontal>
         {badges.map((value: string, index: number) => (
-          <Badge key={index}>{value}</Badge>
+          <Badge key={index} my={18} mr={badges.length - 1 !== index ? 5 : 0}>{value}</Badge>
         ))}
       </ScrollView>
 
       <Table key="closed-positions-table" data={data} columns={columns} />
-    </ScrollView>
+    </ScrollView >
   )
 }

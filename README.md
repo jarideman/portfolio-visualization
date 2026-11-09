@@ -58,9 +58,9 @@
   - [ ] Date
 
   ## Sorting
-  - [ ] Volume
-  - [ ] Profit / Loss
-  - [ ] Date
+  - [x] Volume
+  - [x] Profit / Loss
+  - [x] Date
 
   ## Visual
   - [ ] Show trade in bars

@@ -1,4 +1,4 @@
-import { ScrollArea, Table as MantineTable } from '@mantine/core';
+import { ScrollArea, Table as MantineTable, Group } from '@mantine/core';
 import {
   createPaginatedRowModel,
   rowPaginationFeature,
@@ -8,6 +8,8 @@ import {
   type RowData,
   type ColumnDef,
   type TableFeatures,
+  rowSortingFeature,
+  createSortedRowModel,
 } from '@tanstack/react-table';
 import { Pagination } from './Pagination';
 
@@ -21,6 +23,9 @@ export function Table<TData extends RowData>({ key, data, columns }: Props<TData
   const features = tableFeatures({
     rowPaginationFeature,
     paginatedRowModel: createPaginatedRowModel(),
+
+    rowSortingFeature,
+    sortedRowModel: createSortedRowModel(),
   })
 
   const table = useTable({
@@ -28,6 +33,10 @@ export function Table<TData extends RowData>({ key, data, columns }: Props<TData
     features,
     columns,
     data,
+
+    defaultColumn: {
+      enableSorting: false,
+    },
   })
 
 
@@ -43,13 +52,31 @@ export function Table<TData extends RowData>({ key, data, columns }: Props<TData
           {table.getHeaderGroups().map((headerGroup) => (
             <MantineTable.Tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <MantineTable.Th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
+                <MantineTable.Th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                  style={{
+                    cursor: header.column.getCanSort() ? 'pointer' : 'default',
+                    userSelect: 'none',
+                  }}
+                >
+                  {header.isPlaceholder ? null : (
+                    <Group gap="xs">
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+
+                      {header.column.getCanSort() && (
+                        <span>
+                          {{
+                            asc: '↑',
+                            desc: '↓',
+                          }[header.column.getIsSorted() as string] ?? '↕'}
+                        </span>
+                      )}
+                    </Group>
+                  )}
                 </MantineTable.Th>
               ))}
             </MantineTable.Tr>
