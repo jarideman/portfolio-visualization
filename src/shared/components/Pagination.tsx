@@ -21,7 +21,7 @@ export function Pagination({ table }: Props) {
   const pageCount = table.getPageCount();
 
   return (
-    <Group justify="space-between" align="center">
+    <Group justify="space-between" align="center" mt={10}>
       <Text size="sm" c="dimmed">
         Showing {table.getRowModel().rows.length} of {table.getRowCount()} rows
       </Text>

@@ -3,7 +3,7 @@ import type { Column } from '@tanstack/react-table';
 import type { FilterOption } from '../components/table-filters/types';
 
 interface CustomFilterProps {
-  column: Column<any, any, any>;
+  column: Column<TData, unknown>;
   options?: FilterOption[];
   multiple?: boolean;
   placeholder?: string;

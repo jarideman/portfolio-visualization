@@ -52,7 +52,7 @@
   - [x] Date
 
   ## Filtering
-  - [ ] Symbol
+  - [x] Symbol
   - [x] Buy / Sell
   - [x] Profit / Loss
   - [x] Date
