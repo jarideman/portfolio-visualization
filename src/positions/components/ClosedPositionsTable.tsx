@@ -4,7 +4,7 @@ import { Table } from "../../shared/components/Table";
 import { useClosedPositions } from "../hooks/use-closed-positions";
 import ProfitText from "../../shared/components/ProfitText";
 import { Badge } from "@mantine/core";
-import type { ColumnDef, TableFeatures } from "@tanstack/react-table";
+import { filterFn_equals, type ColumnDef, type TableFeatures } from "@tanstack/react-table";
 import { dateRangeFilter } from "../../shared/utils/dateRangeFilter";
 import { DateRangeFilter } from "../../shared/components/filters/DateRangeFilter";
 import { OptionsFilter } from "../../shared/components/filters/OptionsFilter";
@@ -21,15 +21,16 @@ export function ClosedPositionsTable() {
     {
       accessorKey: 'type',
       header: 'Type',
-      filterFn: 'equals',
+      enableColumnFilter: true,
+      filterFn: filterFn_equals,
       meta: {
         Filter: OptionsFilter,
         filterProps: {
           options: [
-            { label: 'Buy', value: 'BUY' },
-            { label: 'Sell', value: 'SELL' },
+            { label: 'Buy', value: 'buy' },
+            { label: 'Sell', value: 'sell' },
           ],
-          placeholder: 'Direction',
+          placeholder: 'Type',
         },
       },
     },

@@ -10,7 +10,7 @@ export interface FilterOption {
 }
 
 export interface OptionsFilterProps extends FilterProps {
-  options: FilterOption[];
+  options?: FilterOption[];
   multiple?: boolean;
   placeholder?: string;
 }

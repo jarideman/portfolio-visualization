@@ -53,9 +53,9 @@
 
   ## Filtering
   - [ ] Symbol
-  - [ ] Buy / Sell
-  - [ ] Profit / Loss
-  - [ ] Date
+  - [x] Buy / Sell
+  - [x] Profit / Loss
+  - [x] Date
 
   ## Sorting
   - [x] Volume

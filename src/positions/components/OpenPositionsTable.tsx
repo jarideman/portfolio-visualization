@@ -4,7 +4,11 @@ import { Table } from "../../shared/components/Table";
 import { useOpenPositions } from "../hooks/use-open-positions";
 import ProfitText from "../../shared/components/ProfitText";
 import { Badge } from "@mantine/core";
-import type { ColumnDef, TableFeatures } from "@tanstack/react-table";
+import { filterFn_equals, type ColumnDef, type TableFeatures } from "@tanstack/react-table";
+import { OptionsFilter } from "../../shared/components/filters/OptionsFilter";
+import { profitFilter } from "../../shared/utils/profitFilter";
+import { dateRangeFilter } from "../../shared/utils/dateRangeFilter";
+import { DateRangeFilter } from "../../shared/components/filters/DateRangeFilter";
 
 export function OpenPositionsTable() {
   const { data, isPending, error } = useOpenPositions()
@@ -17,6 +21,18 @@ export function OpenPositionsTable() {
     {
       accessorKey: 'type',
       header: 'Type',
+      enableColumnFilter: true,
+      filterFn: filterFn_equals,
+      meta: {
+        Filter: OptionsFilter,
+        filterProps: {
+          options: [
+            { label: 'Buy', value: 'buy' },
+            { label: 'Sell', value: 'sell' },
+          ],
+          placeholder: 'Type',
+        },
+      },
     },
     {
       accessorKey: 'volume',
@@ -36,11 +52,29 @@ export function OpenPositionsTable() {
       header: 'Profit',
       cell: (info) => <ProfitText value={info.getValue<number>()} />,
       enableSorting: true,
+      enableColumnFilter: true,
+      filterFn: profitFilter,
+      meta: {
+        Filter: OptionsFilter,
+        filterProps: {
+          options: [
+            { label: 'Profit', value: 'profit' },
+            { label: 'Loss', value: 'loss' },
+            { label: 'Break even', value: 'break_even' },
+          ],
+          placeholder: 'Result',
+        },
+      },
     },
     {
       accessorKey: 'date',
       header: 'Date',
       enableSorting: true,
+      enableColumnFilter: true,
+      filterFn: dateRangeFilter,
+      meta: {
+        Filter: DateRangeFilter,
+      },
     },
   ]
 
