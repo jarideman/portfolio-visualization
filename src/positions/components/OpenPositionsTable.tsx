@@ -9,14 +9,28 @@ import { OptionsFilter } from "../../shared/components/filters/OptionsFilter";
 import { profitFilter } from "../../shared/utils/profitFilter";
 import { dateRangeFilter } from "../../shared/utils/dateRangeFilter";
 import { DateRangeFilter } from "../../shared/components/filters/DateRangeFilter";
+import { useState } from "react";
+import { multiSelectFilter } from "../../shared/utils/multiSelectFilter";
 
 export function OpenPositionsTable() {
   const { data, isPending, error } = useOpenPositions()
+
+  const [selectedSymbols, setSelectedSymbols] = useState<string[]>([]);
+
+  const toggleSymbol = (symbol: string) => {
+    setSelectedSymbols((current) =>
+      current.includes(symbol)
+        ? current.filter((item) => item !== symbol)
+        : [...current, symbol]
+    );
+  };
 
   const columns: ColumnDef<TableFeatures, OpenPosition>[] = [
     {
       accessorKey: 'symbol',
       header: 'Symbol',
+      enableColumnFilter: true,
+      filterFn: multiSelectFilter,
     },
     {
       accessorKey: 'type',
@@ -87,12 +101,46 @@ export function OpenPositionsTable() {
   return (
     <ScrollView>
       <ScrollView horizontal>
-        {badges.map((value: string, index: number) => (
-          <Badge key={index} my={18} mr={badges.length - 1 !== index ? 5 : 0}>{value}</Badge>
-        ))}
+        <Badge
+          my={18}
+          mr={5}
+          variant={selectedSymbols.length === 0 ? 'filled' : 'outline'}
+          color={selectedSymbols.length === 0 ? 'blue' : 'gray'}
+          style={{ cursor: 'pointer' }}
+          onClick={() => setSelectedSymbols([])}
+        >
+          All
+        </Badge>
+
+        {badges.map((symbol) => {
+          const selected = selectedSymbols.includes(symbol);
+
+          return (
+            <Badge
+              key={symbol}
+              my={18}
+              mr={5}
+              variant={selected ? 'filled' : 'outline'}
+              color={selected ? 'blue' : 'gray'}
+              style={{ cursor: 'pointer' }}
+              onClick={() => toggleSymbol(symbol)}
+            >
+              {symbol}
+            </Badge>
+          );
+        })}
       </ScrollView>
 
-      <Table key="open-positions-table" data={data} columns={columns} />
+      <Table
+        key="open-positions-table"
+        data={data}
+        columns={columns}
+        columnFilters={
+          selectedSymbols.length
+            ? [{ id: 'symbol', value: selectedSymbols }]
+            : []
+        }
+      />
     </ScrollView>
   )
 }

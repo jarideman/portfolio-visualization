@@ -19,9 +19,10 @@ type Props<TData extends RowData> = {
   key: string
   data: TData[];
   columns: ColumnDef<TableFeatures, TData, unknown>[];
+  columnFilters?: { id: string; value: unknown }[];
 };
 
-export function Table<TData extends RowData>({ key, data, columns }: Props<TData>) {
+export function Table<TData extends RowData>({ key, data, columns, columnFilters = [], }: Props<TData>) {
   const features = tableFeatures({
     rowPaginationFeature,
     paginatedRowModel: createPaginatedRowModel(),
@@ -38,6 +39,10 @@ export function Table<TData extends RowData>({ key, data, columns }: Props<TData
     features,
     columns,
     data,
+
+    state: {
+      columnFilters,
+    },
 
     defaultColumn: {
       enableSorting: false,
