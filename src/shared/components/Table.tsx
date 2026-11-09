@@ -1,4 +1,10 @@
-import { ScrollArea, Table as MantineTable, Group, Stack } from '@mantine/core';
+import {
+  ScrollArea,
+  Table as MantineTable,
+  Group,
+  Stack,
+} from "@mantine/core";
+
 import {
   createPaginatedRowModel,
   rowPaginationFeature,
@@ -12,17 +18,28 @@ import {
   createSortedRowModel,
   columnFilteringFeature,
   createFilteredRowModel,
-} from '@tanstack/react-table';
-import { Pagination } from './Pagination';
+  type ColumnFiltersState,
+  type OnChangeFn,
+} from "@tanstack/react-table";
+
+import { Pagination } from "./Pagination";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 
 type Props<TData extends RowData> = {
-  key: string
+  key: string;
   data: TData[];
   columns: ColumnDef<TableFeatures, TData, unknown>[];
-  columnFilters?: { id: string; value: unknown }[];
+  columnFilters?: ColumnFiltersState;
+  onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
 };
 
-export function Table<TData extends RowData>({ key, data, columns, columnFilters = [], }: Props<TData>) {
+export function Table<TData extends RowData>({
+  key,
+  data,
+  columns,
+  columnFilters = [],
+  onColumnFiltersChange,
+}: Props<TData>) {
   const features = tableFeatures({
     rowPaginationFeature,
     paginatedRowModel: createPaginatedRowModel(),
@@ -32,10 +49,10 @@ export function Table<TData extends RowData>({ key, data, columns, columnFilters
 
     columnFilteringFeature,
     filteredRowModel: createFilteredRowModel(),
-  })
+  });
 
   const table = useTable({
-    key: key,
+    key,
     features,
     columns,
     data,
@@ -44,12 +61,13 @@ export function Table<TData extends RowData>({ key, data, columns, columnFilters
       columnFilters,
     },
 
+    onColumnFiltersChange,
+
     defaultColumn: {
       enableSorting: false,
       enableColumnFilter: false,
     },
-  })
-
+  });
 
   return (
     <ScrollArea>
@@ -74,19 +92,28 @@ export function Table<TData extends RowData>({ key, data, columns, columnFilters
                       <Group
                         gap="xs"
                         style={{
-                          cursor: column.getCanSort() ? 'pointer' : 'default',
+                          cursor: column.getCanSort()
+                            ? "pointer"
+                            : "default",
                         }}
                         onClick={column.getToggleSortingHandler()}
                       >
                         {flexRender(
                           column.columnDef.header,
-                          header.getContext(),
+                          header.getContext()
                         )}
 
-                        {{
-                          asc: '↑',
-                          desc: '↓',
-                        }[column.getIsSorted() as string] ?? ''}
+                        {column.getCanSort() && (
+                          <>
+                            {column.getIsSorted() === "asc" ? (
+                              <ArrowUp size={14} />
+                            ) : column.getIsSorted() === "desc" ? (
+                              <ArrowDown size={14} />
+                            ) : (
+                              <ArrowUpDown size={14} opacity={0.4} />
+                            )}
+                          </>
+                        )}
                       </Group>
 
                       {column.getCanFilter() && FilterComponent && (
@@ -111,7 +138,7 @@ export function Table<TData extends RowData>({ key, data, columns, columnFilters
                   <MantineTable.Td key={cell.id}>
                     {flexRender(
                       cell.column.columnDef.cell,
-                      cell.getContext(),
+                      cell.getContext()
                     )}
                   </MantineTable.Td>
                 ))}
