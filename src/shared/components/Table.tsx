@@ -1,4 +1,4 @@
-import { ScrollArea, Table as MantineTable, Group } from '@mantine/core';
+import { ScrollArea, Table as MantineTable, Group, Stack } from '@mantine/core';
 import {
   createPaginatedRowModel,
   rowPaginationFeature,
@@ -10,6 +10,8 @@ import {
   type TableFeatures,
   rowSortingFeature,
   createSortedRowModel,
+  columnFilteringFeature,
+  createFilteredRowModel,
 } from '@tanstack/react-table';
 import { Pagination } from './Pagination';
 
@@ -26,6 +28,9 @@ export function Table<TData extends RowData>({ key, data, columns }: Props<TData
 
     rowSortingFeature,
     sortedRowModel: createSortedRowModel(),
+
+    columnFilteringFeature,
+    filteredRowModel: createFilteredRowModel(),
   })
 
   const table = useTable({
@@ -36,6 +41,7 @@ export function Table<TData extends RowData>({ key, data, columns }: Props<TData
 
     defaultColumn: {
       enableSorting: false,
+      enableColumnFilter: false,
     },
   })
 
@@ -51,34 +57,43 @@ export function Table<TData extends RowData>({ key, data, columns }: Props<TData
         <MantineTable.Thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <MantineTable.Tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <MantineTable.Th
-                  key={header.id}
-                  onClick={header.column.getToggleSortingHandler()}
-                  style={{
-                    cursor: header.column.getCanSort() ? 'pointer' : 'default',
-                    userSelect: 'none',
-                  }}
-                >
-                  {header.isPlaceholder ? null : (
-                    <Group gap="xs">
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
+              {headerGroup.headers.map((header) => {
+                const column = header.column;
 
-                      {header.column.getCanSort() && (
-                        <span>
-                          {{
-                            asc: '↑',
-                            desc: '↓',
-                          }[header.column.getIsSorted() as string] ?? '↕'}
-                        </span>
+                const FilterComponent = column.columnDef.meta?.Filter;
+                const filterProps = column.columnDef.meta?.filterProps;
+
+                return (
+                  <MantineTable.Th key={header.id}>
+                    <Stack gap="xs">
+                      <Group
+                        gap="xs"
+                        style={{
+                          cursor: column.getCanSort() ? 'pointer' : 'default',
+                        }}
+                        onClick={column.getToggleSortingHandler()}
+                      >
+                        {flexRender(
+                          column.columnDef.header,
+                          header.getContext(),
+                        )}
+
+                        {{
+                          asc: '↑',
+                          desc: '↓',
+                        }[column.getIsSorted() as string] ?? ''}
+                      </Group>
+
+                      {column.getCanFilter() && FilterComponent && (
+                        <FilterComponent
+                          column={column}
+                          {...filterProps}
+                        />
                       )}
-                    </Group>
-                  )}
-                </MantineTable.Th>
-              ))}
+                    </Stack>
+                  </MantineTable.Th>
+                );
+              })}
             </MantineTable.Tr>
           ))}
         </MantineTable.Thead>
