@@ -19,6 +19,7 @@ import { dateRangeFilter } from "../../shared/utils/dateRangeFilter";
 import { profitFilter } from "../../shared/utils/profitFilter";
 import { multiSelectFilter } from "../../shared/utils/multiSelectFilter";
 import { usePositions } from "../hooks/use-positions";
+import { firstToUpper } from "../../shared/utils/firstToUpper";
 
 type Props = {
   type: PositionType
@@ -77,6 +78,7 @@ export function PositionsTable({ type }: Props) {
     {
       accessorKey: "type",
       header: "Type",
+      cell: (info) => firstToUpper(info.getValue<string>()),
       enableColumnFilter: true,
       filterFn: filterFn_equals,
       meta: {

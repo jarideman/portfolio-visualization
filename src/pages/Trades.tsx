@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { Tabs } from "@mantine/core";
 import { PositionsTable } from "../positions/components/PositionsTable";
+import { firstToUpper } from "../shared/utils/firstToUpper";
 
 export default function Trades() {
   const tabs = ['open', 'closed'] as const;
@@ -11,7 +12,7 @@ export default function Trades() {
         <Tabs.List>
           {tabs.map((tab) => (
             <Tabs.Tab key={tab} value={tab}>
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {firstToUpper(tab)}
             </Tabs.Tab>
           ))}
         </Tabs.List>
