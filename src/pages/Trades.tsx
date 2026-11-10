@@ -1,7 +1,6 @@
 import { View } from "react-native";
-import { ClosedPositionsTable } from "../positions/components/ClosedPositionsTable";
-import { OpenPositionsTable } from "../positions/components/OpenPositionsTable";
 import { Tabs } from "@mantine/core";
+import { PositionsTable } from "../positions/components/PositionsTable";
 
 export default function Trades() {
   return (
@@ -18,11 +17,11 @@ export default function Trades() {
         </Tabs.List>
 
         <Tabs.Panel value="open">
-          <OpenPositionsTable />
+          <PositionsTable type="open" />
         </Tabs.Panel>
 
         <Tabs.Panel value="closed">
-          <ClosedPositionsTable />
+          <PositionsTable type="closed" />
         </Tabs.Panel>
       </Tabs>
     </View>

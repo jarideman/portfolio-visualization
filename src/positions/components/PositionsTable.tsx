@@ -1,33 +1,36 @@
 import { useState } from "react";
 import { ScrollView } from "react-native";
 import { Badge } from "@mantine/core";
-
-import type { OpenPosition } from "../types";
-import { useOpenPositions } from "../hooks/use-open-positions";
-
-import { Table } from "../../shared/components/Table";
-import ProfitText from "../../shared/components/ProfitText";
-
 import {
   filterFn_equals,
   type ColumnDef,
   type TableFeatures,
 } from "@tanstack/react-table";
 
-import { OptionsFilter } from "../../shared/components/filters/OptionsFilter";
-import { DateRangeFilter } from "../../shared/components/filters/DateRangeFilter";
+import type { Position, PositionType } from "../types";
 
-import { profitFilter } from "../../shared/utils/profitFilter";
+import { Table } from "../../shared/components/Table";
+import ProfitText from "../../shared/components/ProfitText";
+
+import { DateRangeFilter } from "../../shared/components/filters/DateRangeFilter";
+import { OptionsFilter } from "../../shared/components/filters/OptionsFilter";
+
 import { dateRangeFilter } from "../../shared/utils/dateRangeFilter";
+import { profitFilter } from "../../shared/utils/profitFilter";
 import { multiSelectFilter } from "../../shared/utils/multiSelectFilter";
+import { usePositions } from "../hooks/use-positions";
+
+type Props = {
+  type: PositionType
+}
 
 type ColumnFilter = {
   id: string;
   value: unknown;
 };
 
-export function OpenPositionsTable() {
-  const { data, isPending, error } = useOpenPositions();
+export function PositionsTable({ type }: Props) {
+  const { data, isPending, error } = usePositions(type);
 
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
 
@@ -60,7 +63,7 @@ export function OpenPositionsTable() {
     );
   };
 
-  const columns: ColumnDef<TableFeatures, OpenPosition>[] = [
+  const columns: ColumnDef<TableFeatures, Position>[] = [
     {
       accessorKey: "symbol",
       header: "Symbol",
@@ -92,10 +95,22 @@ export function OpenPositionsTable() {
       accessorKey: "price_open",
       header: "Entry price",
     },
-    {
-      accessorKey: "price_current",
-      header: "Current price",
-    },
+    ...(type === 'closed'
+      ? [
+        {
+          accessorKey: "price_exit",
+          header: "Exit price",
+        },
+      ]
+      : []),
+    ...(type === 'open'
+      ? [
+        {
+          accessorKey: "price_current",
+          header: "Current price",
+        },
+      ]
+      : []),
     {
       accessorKey: "profit",
       header: "Profit",
@@ -132,7 +147,7 @@ export function OpenPositionsTable() {
   if (error) return "An error has occurred: " + error.message;
 
   const badges = [
-    ...new Set(data.map((item: OpenPosition) => item.symbol)),
+    ...new Set(data.map((item: Position) => item.symbol)),
   ];
 
   return (
@@ -169,7 +184,7 @@ export function OpenPositionsTable() {
       </ScrollView>
 
       <Table
-        key="open-positions-table"
+        key={`${type}-positions-table`}
         data={data}
         columns={columns}
         columnFilters={columnFilters}
