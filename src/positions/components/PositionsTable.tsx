@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
-import { Badge } from "@mantine/core";
+import { Badge, Group } from "@mantine/core";
+
 import {
   filterFn_equals,
   type ColumnDef,
@@ -22,8 +23,8 @@ import { usePositions } from "../hooks/use-positions";
 import { firstToUpper } from "../../shared/utils/firstToUpper";
 
 type Props = {
-  type: PositionType
-}
+  type: PositionType;
+};
 
 type ColumnFilter = {
   id: string;
@@ -33,11 +34,11 @@ type ColumnFilter = {
 export function PositionsTable({ type }: Props) {
   const { data, isPending, error } = usePositions(type);
 
-  useEffect(() => {
-    setColumnFilters([])
-  }, [type])
-
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
+
+  useEffect(() => {
+    setColumnFilters([]);
+  }, [type]);
 
   const selectedSymbols =
     (columnFilters.find((filter) => filter.id === "symbol")
@@ -45,7 +46,9 @@ export function PositionsTable({ type }: Props) {
 
   const toggleSymbol = (symbol: string) => {
     setColumnFilters((current) => {
-      const existing = current.find((filter) => filter.id === "symbol");
+      const existing = current.find(
+        (filter) => filter.id === "symbol"
+      );
 
       const selected = (existing?.value as string[]) ?? [];
 
@@ -101,7 +104,7 @@ export function PositionsTable({ type }: Props) {
       accessorKey: "price_open",
       header: "Entry price",
     },
-    ...(type === 'closed'
+    ...(type === "closed"
       ? [
         {
           accessorKey: "price_exit",
@@ -109,7 +112,7 @@ export function PositionsTable({ type }: Props) {
         },
       ]
       : []),
-    ...(type === 'open'
+    ...(type === "open"
       ? [
         {
           accessorKey: "price_current",
@@ -158,43 +161,42 @@ export function PositionsTable({ type }: Props) {
 
   return (
     <ScrollView>
-      <ScrollView horizontal>
-        <Badge
-          my={18}
-          mr={5}
-          variant={selectedSymbols.length === 0 ? "filled" : "outline"}
-          color={selectedSymbols.length === 0 ? "blue" : "gray"}
-          style={{ cursor: "pointer" }}
-          onClick={clearSymbolFilter}
-        >
-          All
-        </Badge>
-
-        {badges.map((symbol) => {
-          const selected = selectedSymbols.includes(symbol);
-
-          return (
-            <Badge
-              key={symbol}
-              my={18}
-              mr={5}
-              variant={selected ? "filled" : "outline"}
-              color={selected ? "blue" : "gray"}
-              style={{ cursor: "pointer" }}
-              onClick={() => toggleSymbol(symbol)}
-            >
-              {symbol}
-            </Badge>
-          );
-        })}
-      </ScrollView>
-
       <Table
-        key={`${type}-positions-table`}
+        tableKey={`${type}-positions-table`}
         data={data}
         columns={columns}
         columnFilters={columnFilters}
         onColumnFiltersChange={setColumnFilters}
+        badges={
+          <Group gap={5} wrap="nowrap">
+            <Badge
+              variant={
+                selectedSymbols.length === 0 ? "filled" : "outline"
+              }
+              color={selectedSymbols.length === 0 ? "blue" : "gray"}
+              style={{ cursor: "pointer" }}
+              onClick={clearSymbolFilter}
+            >
+              All
+            </Badge>
+
+            {badges.map((symbol) => {
+              const selected = selectedSymbols.includes(symbol);
+
+              return (
+                <Badge
+                  key={symbol}
+                  variant={selected ? "filled" : "outline"}
+                  color={selected ? "blue" : "gray"}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleSymbol(symbol)}
+                >
+                  {symbol}
+                </Badge>
+              );
+            })}
+          </Group>
+        }
       />
     </ScrollView>
   );

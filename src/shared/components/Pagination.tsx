@@ -47,15 +47,15 @@ export function Pagination({ table }: Props) {
       </Group>
 
       <Select
-        w={110}
+        w={140}
         size="sm"
         value={String(pageSize)}
         onChange={(value) => {
           if (value) table.setPageSize(Number(value));
         }}
-        data={['10', '20', '30', '40', '50'].map((size) => ({
+        data={['10', '15', '25', '50', '100'].map((size) => ({
           value: size,
-          label: `${size} / page`,
+          label: `${size} per page`,
         }))}
         allowDeselect={false}
       />
