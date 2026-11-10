@@ -18,12 +18,18 @@ type Props = {
 
 export function Pagination({ table }: Props) {
   const { pageIndex, pageSize } = table.state.pagination;
+
+  const totalRows = table.getRowCount();
   const pageCount = table.getPageCount();
+  const currentRows = table.getRowModel().rows.length;
+
+  const startRow = totalRows === 0 ? 0 : pageIndex * pageSize + 1;
+  const endRow = Math.min(pageIndex * pageSize + currentRows, totalRows);
 
   return (
     <Group justify="space-between" align="center" mt={10}>
       <Text size="sm" c="dimmed">
-        Showing {table.getRowModel().rows.length} of {table.getRowCount()} rows
+        Showing {startRow} - {endRow} of {totalRows} rows
       </Text>
 
       <Group gap="md">
