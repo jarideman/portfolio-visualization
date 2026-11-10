@@ -11,6 +11,7 @@ export default function Dashboard() {
 
   return (
     <View>
+
       <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={data} withLegend />
     </View>
   );
