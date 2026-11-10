@@ -34,33 +34,33 @@
 
 # Trades
   ## Open trades
-  - [ ] Symbol
-  - [ ] Buy / Sell
-  - [ ] Quantity
-  - [ ] Entry price
-  - [ ] Current price
-  - [ ] P&L
-  - [ ] Date
+  - [x] Symbol
+  - [x] Buy / Sell
+  - [x] Quantity
+  - [x] Entry price
+  - [x] Current price
+  - [x] Profit
+  - [x] Date
 
   ## Closed trades
-  - [ ] Symbol
-  - [ ] Buy / Sell
-  - [ ] Quantity
-  - [ ] Entry price
-  - [ ] Exit price
-  - [ ] P&L
-  - [ ] Date
+  - [x] Symbol
+  - [x] Buy / Sell
+  - [x] Quantity
+  - [x] Entry price
+  - [x] Exit price
+  - [x] Profit
+  - [x] Date
 
   ## Filtering
-  - [ ] Symbol
-  - [ ] Buy / Sell
-  - [ ] Profit / Loss
-  - [ ] Date
+  - [x] Symbol
+  - [x] Buy / Sell
+  - [x] Profit / Loss
+  - [x] Date
 
   ## Sorting
-  - [ ] Volume
-  - [ ] Profit / Loss
-  - [ ] Date
+  - [x] Volume
+  - [x] Profit / Loss
+  - [x] Date
 
   ## Visual
   - [ ] Show trade in bars

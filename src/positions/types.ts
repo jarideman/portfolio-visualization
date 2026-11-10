@@ -1,15 +1,13 @@
-
-export interface OpenPosition {
-  price_open: number;
-  tp: number;
-  sl: number;
+export interface Position {
   symbol: string;
+  status: string;
+  type: string;
+  volume: number;
+  price_open: number;
+  price_current?: number;
+  price_exit?: number;
   profit: number;
+  date: string;
 };
 
-export interface ClosedPosition {
-  price_open: number;
-  lot_size: number;
-  profit: number;
-  symbol: string;
-};
+export type PositionType = "open" | "closed"

@@ -18,12 +18,18 @@ type Props = {
 
 export function Pagination({ table }: Props) {
   const { pageIndex, pageSize } = table.state.pagination;
+
+  const totalRows = table.getRowCount();
   const pageCount = table.getPageCount();
+  const currentRows = table.getRowModel().rows.length;
+
+  const startRow = totalRows === 0 ? 0 : pageIndex * pageSize + 1;
+  const endRow = Math.min(pageIndex * pageSize + currentRows, totalRows);
 
   return (
-    <Group justify="space-between" align="center">
+    <Group justify="space-between" align="center" mt={10}>
       <Text size="sm" c="dimmed">
-        Showing {table.getRowModel().rows.length} of {table.getRowCount()} rows
+        Showing {startRow} - {endRow} of {totalRows} rows
       </Text>
 
       <Group gap="md">
@@ -41,15 +47,15 @@ export function Pagination({ table }: Props) {
       </Group>
 
       <Select
-        w={110}
+        w={140}
         size="sm"
         value={String(pageSize)}
         onChange={(value) => {
           if (value) table.setPageSize(Number(value));
         }}
-        data={['10', '20', '30', '40', '50'].map((size) => ({
+        data={['10', '15', '25', '50', '100'].map((size) => ({
           value: size,
-          label: `${size} / page`,
+          label: `${size} per page`,
         }))}
         allowDeselect={false}
       />
