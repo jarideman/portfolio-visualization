@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { Badge } from "@mantine/core";
 import {
@@ -31,6 +31,10 @@ type ColumnFilter = {
 
 export function PositionsTable({ type }: Props) {
   const { data, isPending, error } = usePositions(type);
+
+  useEffect(() => {
+    setColumnFilters([])
+  }, [type])
 
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
 
