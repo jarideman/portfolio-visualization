@@ -1,4 +1,4 @@
-import { Stack } from '@mantine/core';
+import { Group } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import type { DateRangeValue, FilterProps } from '../../types';
 
@@ -20,13 +20,14 @@ export function DateRangeFilter({ column }: FilterProps) {
   };
 
   return (
-    <Stack gap={4}>
+    <Group gap={4} wrap="nowrap">
       <DateInput
         size="xs"
         clearable
         placeholder="Start date"
         value={value.start ?? null}
-        onChange={(date) => update('start', date)}
+        onChange={(date) => update("start", date)}
+        style={{ flex: 1, minWidth: 0 }}
       />
 
       <DateInput
@@ -34,8 +35,9 @@ export function DateRangeFilter({ column }: FilterProps) {
         clearable
         placeholder="End date"
         value={value.end ?? null}
-        onChange={(date) => update('end', date)}
+        onChange={(date) => update("end", date)}
+        style={{ flex: 1, minWidth: 0 }}
       />
-    </Stack>
+    </Group>
   );
 }

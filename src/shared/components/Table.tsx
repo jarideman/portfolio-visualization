@@ -33,7 +33,6 @@ import {
   ArrowUp,
   ArrowUpDown,
   SlidersHorizontal,
-  X,
 } from "lucide-react";
 
 import { Pagination } from "./Pagination";
@@ -91,7 +90,6 @@ export function Table<TData extends RowData>({
   return (
     <ScrollArea>
       <Stack gap="sm" mb="md">
-
         <Group justify="space-between" align="center" wrap="nowrap" mt={10}>
           {badges && (
             <ScrollArea
@@ -186,7 +184,6 @@ export function Table<TData extends RowData>({
         )}
       </Stack>
 
-      {/* Table */}
       <MantineTable
         striped
         highlightOnHover
