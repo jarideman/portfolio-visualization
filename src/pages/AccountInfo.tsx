@@ -140,11 +140,12 @@ export default function AccountInfo() {
           <Divider color="dark.4" mb="xs" />
 
           <Stack gap={0}>
-            {accountDetails.map((detail) => (
+            {accountDetails.map((detail, index) => (
               <DetailRow
                 key={detail.label}
                 label={detail.label}
                 value={detail.value}
+                isLast={accountDetails.length - 1 === index}
               />
             ))}
           </Stack>
@@ -181,10 +182,10 @@ export default function AccountInfo() {
               customValue={
                 <StatusBadge enabled={accountInfo.trade_expert} />
               }
+              isLast
             />
           </Stack>
         </Card>
-
       </SimpleGrid>
     </Stack>
   );
