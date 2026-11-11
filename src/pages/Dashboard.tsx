@@ -3,13 +3,38 @@ import { CandlestickChart, PieChart } from "@mantine/charts";
 import { useAllocations } from "../dashboard/hooks/use-closed-positions";
 import { Card, Divider, Group, SimpleGrid, Stack, Text } from "@mantine/core";
 import { DetailRow } from "../shared/components/DetailRow";
+import { usePortfolioDetails } from "../account/hooks/use-portfolio-details";
+import { useRiskDetails } from "../account/hooks/use-risk-details";
 
 export default function Dashboard() {
-  const { data, isPending, error } = useAllocations()
+  const {
+    data: allocationData,
+    isPending: isPendingAllocations,
+    error: allocationsError,
+  } = useAllocations()
+
+  const {
+    data: portfolioDetails,
+    isPending: isPendingPortfolioDetails,
+    error: portfolioError,
+  } = usePortfolioDetails()
+
+  const {
+    data: riskDetails,
+    isPending: isPendingRiskDetails,
+    error: riskError,
+  } = useRiskDetails()
+
+  const isPending =
+    isPendingAllocations ||
+    isPendingPortfolioDetails ||
+    isPendingRiskDetails
+
+  const error = allocationsError || portfolioError || riskError
 
   if (isPending) return 'Loading...'
 
-  if (error) return 'An error has occurred: ' + error.message
+  if (error) return `An error has occurred: ${error.message}`
 
   const chartdata = [
     { date: 'Mar 01', open: 136, high: 142, low: 133, close: 140 },
@@ -34,59 +59,13 @@ export default function Dashboard() {
     { date: 'Mar 20', open: 161, high: 168, low: 160, close: 166 },
   ];
 
-  const portfolioDetails = [
-    {
-      label: "Total Portfolio Value",
-      value: 0,
-    },
-    {
-      label: "Total P&L",
-      value: 0,
-    },
-    {
-      label: "Total Return (%)",
-      value: 0,
-    },
-    {
-      label: "Today's P&L",
-      value: 0,
-    },
-    {
-      label: "Cash Balance",
-      value: 0,
-    },
-  ];
-
-  const riskDetails = [
-    {
-      label: "Maximum Drawdown",
-      value: 0,
-    },
-    {
-      label: "Win Rate",
-      value: 0,
-    },
-    {
-      label: "Profit Factor",
-      value: 0,
-    },
-    {
-      label: "Average Win",
-      value: 0,
-    },
-    {
-      label: "Average Loss",
-      value: 0,
-    },
-  ];
-
   return (
     <View>
       <SimpleGrid
         spacing="lg"
       >
         <View>
-          <Text fw={600} size="md">
+          <Text fw={600} size="md" mb={20}>
             Performance chart
           </Text>
 
@@ -155,7 +134,7 @@ export default function Dashboard() {
           <Divider color="dark.4" mb="xs" />
 
           <Stack gap={0}>
-            <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={data} withLegend />
+            <PieChart withLabelsLine labelsPosition="inside" labelsType="percent" withLabels data={allocationData} withLegend />
           </Stack>
         </Card>
       </SimpleGrid>

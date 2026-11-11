@@ -1,9 +1,21 @@
 import http from "../../shared/services/http-service"
 
 export const accountService = {
-    async getAccountInfo() {
-        const response = await http.get('account')
-    
-        return response.data
-    },
+  async getAccountInfo() {
+    const response = await http.get('account/info')
+
+    return response.data
+  },
+
+  async getPortfolioDetails() {
+    const response = await http.get('account/portfolio')
+
+    return response.data
+  },
+
+  async getRiskDetails() {
+    const response = await http.get('account/risk')
+
+    return response.data
+  },
 }
