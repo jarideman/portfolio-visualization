@@ -22,16 +22,7 @@ export function StatCard({
   iconColor,
 }: StatCardProps) {
   return (
-    <Card
-      bg="dark.7"
-      c="gray.0"
-      radius="lg"
-      p="lg"
-      withBorder
-      style={{
-        borderColor: "#263247",
-      }}
-    >
+    <Card>
       <Group justify="space-between" align="center">
         <Text c="dimmed" size="sm" fw={500}>
           {label}

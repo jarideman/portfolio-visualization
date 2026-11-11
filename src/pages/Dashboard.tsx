@@ -80,17 +80,6 @@ export default function Dashboard() {
     },
   ];
 
-  const cardProps = {
-    bg: "dark.7",
-    c: "gray.0",
-    radius: "lg",
-    p: "lg",
-    withBorder: true,
-    style: {
-      borderColor: "#263247",
-    },
-  };
-
   return (
     <View>
       <SimpleGrid
@@ -112,8 +101,9 @@ export default function Dashboard() {
           lg: 3,
         }}
         spacing="lg"
+        mt={50}
       >
-        <Card {...cardProps}>
+        <Card>
           <Group gap="sm" mb="md">
             <Text fw={600} size="md">
               Portfolio summary
@@ -134,7 +124,7 @@ export default function Dashboard() {
           </Stack>
         </Card>
 
-        <Card {...cardProps}>
+        <Card>
           <Group gap="sm" mb="md">
             <Text fw={600} size="md">
               Portfolio summary
@@ -155,7 +145,7 @@ export default function Dashboard() {
           </Stack>
         </Card>
 
-        <Card {...cardProps}>
+        <Card>
           <Group gap="sm" mb="md">
             <Text fw={600} size="md">
               Allocation

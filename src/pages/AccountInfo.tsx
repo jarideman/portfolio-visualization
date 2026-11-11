@@ -77,17 +77,6 @@ export default function AccountInfo() {
     },
   ];
 
-  const cardProps = {
-    bg: "dark.7",
-    c: "gray.0",
-    radius: "lg",
-    p: "lg",
-    withBorder: true,
-    style: {
-      borderColor: "#263247",
-    },
-  };
-
   return (
     <Stack w="100%" mih="100vh" gap="xl">
 
@@ -121,7 +110,7 @@ export default function AccountInfo() {
         }}
         spacing="lg"
       >
-        <Card {...cardProps}>
+        <Card>
           <Group gap="sm" mb="md">
             <ThemeIcon
               color="blue"
@@ -151,7 +140,7 @@ export default function AccountInfo() {
           </Stack>
         </Card>
 
-        <Card {...cardProps}>
+        <Card>
           <Group gap="sm" mb="md">
             <ThemeIcon
               color="blue"
