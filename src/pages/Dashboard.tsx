@@ -1,12 +1,19 @@
 import { View } from "react-native";
-import { CandlestickChart, LineChart, PieChart } from "@mantine/charts";
-import { useAllocations } from "../dashboard/hooks/use-closed-positions";
+import { LineChart, PieChart } from "@mantine/charts";
+import { useAllocations } from "../account/hooks/use-allocations";
 import { Card, Divider, Group, SimpleGrid, Stack, Text } from "@mantine/core";
 import { DetailRow } from "../shared/components/DetailRow";
 import { usePortfolioDetails } from "../account/hooks/use-portfolio-details";
 import { useRiskDetails } from "../account/hooks/use-risk-details";
+import { usePerformanceData } from "../account/hooks/use-performance-data";
 
 export default function Dashboard() {
+  const {
+    data: performanceData,
+    isPending: isPendingPerformance,
+    error: performanceError,
+  } = usePerformanceData();
+
   const {
     data: allocationData,
     isPending: isPendingAllocations,
@@ -26,41 +33,13 @@ export default function Dashboard() {
   } = useRiskDetails();
 
   const isPending =
-    isPendingAllocations || isPendingPortfolioDetails || isPendingRiskDetails;
+    isPendingPerformance || isPendingAllocations || isPendingPortfolioDetails || isPendingRiskDetails;
 
-  const error = allocationsError || portfolioError || riskError;
+  const error = performanceError || allocationsError || portfolioError || riskError;
 
   if (isPending) return "Loading...";
 
   if (error) return `An error has occurred: ${error.message}`;
-
-  const chartData = [
-    {
-      date: "Mar 22",
-      Balance: 1050,
-      "P&L": 50,
-    },
-    {
-      date: "Mar 23",
-      Balance: 1095,
-      "P&L": 95,
-    },
-    {
-      date: "Mar 24",
-      Balance: 1025,
-      "P&L": 25,
-    },
-    {
-      date: "Mar 25",
-      Balance: 1035,
-      "P&L": 35,
-    },
-    {
-      date: "Mar 26",
-      Balance: 1060,
-      "P&L": 60,
-    },
-  ];
 
   return (
     <View>
@@ -72,7 +51,7 @@ export default function Dashboard() {
 
           <LineChart
             h={300}
-            data={chartData}
+            data={performanceData}
             dataKey="date"
             series={[
               { name: "Balance", color: "indigo.6" },

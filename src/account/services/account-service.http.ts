@@ -7,6 +7,12 @@ export const accountService = {
     return response.data
   },
 
+  async getAllocations() {
+    const response = await http.get('account/allocations')
+
+    return response.data
+  },
+
   async getPortfolioDetails() {
     const response = await http.get('account/portfolio')
 
@@ -15,6 +21,12 @@ export const accountService = {
 
   async getRiskDetails() {
     const response = await http.get('account/risk')
+
+    return response.data
+  },
+
+  async getPerformanceData() {
+    const response = await http.get('account/performance')
 
     return response.data
   },
