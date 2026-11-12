@@ -1,4 +1,5 @@
 export interface Position {
+  ticket: number;
   symbol: string;
   status: string;
   type: string;

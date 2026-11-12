@@ -6,6 +6,7 @@ import AccountInfo from "./pages/AccountInfo";
 import { useState } from "react";
 
 import "./App.css";
+import TradeDetail from "./pages/TradeDetail";
 
 function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -27,6 +28,7 @@ function AppLayout() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/trades" element={<Trades />} />
+          <Route path="/trades/:ticket" element={<TradeDetail />} />
           <Route path="/account" element={<AccountInfo />} />
         </Routes>
       </main>
