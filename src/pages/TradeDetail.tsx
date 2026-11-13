@@ -4,7 +4,7 @@ import { CandlestickChart } from "@mantine/charts";
 import { useParams } from "react-router-dom";
 
 export default function TradeDetail() {
-    const { ticket } = useParams<{ ticket: string }>();
+  const { ticket } = useParams<{ ticket: string }>();
 
   const chartdata = [
     { date: "Mar 01", open: 136, high: 142, low: 133, close: 140 },
