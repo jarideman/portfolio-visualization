@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { Card, Stack, Text } from "@mantine/core";
+import { Card, SimpleGrid, Stack, Text } from "@mantine/core";
 import { CandlestickChart } from "@mantine/charts";
 import { useParams } from "react-router-dom";
 import { usePositionDetail } from "../positions/hooks/use-position-detail";
@@ -108,21 +108,27 @@ export default function TradeDetail() {
         tickLine="none"
       />
 
-      {tradeDetailCards.map((items, index) => (
-        <Card key={index}>
-          <Stack gap={0}>
-            {items.map((item, itemIndex) => (
-              <DetailRow
-                key={item.label}
-                label={item.label}
-                value={item.value}
-                customValue={item.customValue}
-                isLast={itemIndex === items.length - 1}
-              />
-            ))}
-          </Stack>
-        </Card>
-      ))}
+      <SimpleGrid
+        cols={2}
+        spacing="lg"
+        mt={32}
+      >
+        {tradeDetailCards.map((items, index) => (
+          <Card key={index}>
+            <Stack gap={0}>
+              {items.map((item, itemIndex) => (
+                <DetailRow
+                  key={item.label}
+                  label={item.label}
+                  value={item.value}
+                  customValue={item.customValue}
+                  isLast={itemIndex === items.length - 1}
+                />
+              ))}
+            </Stack>
+          </Card>
+        ))}
+      </SimpleGrid>
     </View>
   );
 }
