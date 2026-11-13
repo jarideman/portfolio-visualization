@@ -1,10 +1,17 @@
 import { View } from "react-native";
-import { Text } from "@mantine/core";
+import { Card, Stack, Text } from "@mantine/core";
 import { CandlestickChart } from "@mantine/charts";
 import { useParams } from "react-router-dom";
+import { usePositionDetail } from "../positions/hooks/use-position-detail";
+import type { PositionType } from "../positions/types";
+import { DetailRow } from "../shared/components/DetailRow";
+import { firstToUpper } from "../shared/utils/firstToUpper";
+import ProfitText from "../shared/components/ProfitText";
 
 export default function TradeDetail() {
-  const { ticket } = useParams<{ ticket: string }>();
+  const { type, ticket } = useParams<{ ticket: string; type: PositionType; }>();
+
+  const { data: ticketDetail, isPending, error } = usePositionDetail(type as PositionType, Number(ticket))
 
   const chartdata = [
     { date: "Mar 01", open: 136, high: 142, low: 133, close: 140 },
@@ -29,11 +36,15 @@ export default function TradeDetail() {
     { date: "Mar 20", open: 161, high: 168, low: 160, close: 166 },
   ];
 
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
   return (
     <View>
       <Text>{ticket}</Text>
 
-    <Text>Symbol: BTCUSd</Text>
+      <Text>Symbol: {ticketDetail.symbol}</Text>
        {/* time frame filter? */}
       <CandlestickChart
         h={500}
@@ -42,19 +53,72 @@ export default function TradeDetail() {
         tickLine="none"
       />
 
-      <Text>Type</Text>
-      <Text>Entry</Text>
-      <Text>Exit</Text>
-      <Text>Profit</Text>
-      <Text>Volume</Text>
-      <Text>Date</Text>
+      <Card>
+        <Stack gap={0}>
+          <DetailRow
+            key='type'
+            label="Type"
+            value={firstToUpper(ticketDetail.type)}
+          />
 
-      <Text>Type</Text>
-      <Text>Entry</Text>
-      <Text>Current</Text>
-      <Text>Floating profit</Text>
-      <Text>Volume</Text>
-      <Text>Date</Text>
+          <DetailRow
+            key='volume'
+            label="Volume"
+            value={ticketDetail.volume}
+          />
+
+          <DetailRow
+            key='date'
+            label="Date"
+            value={ticketDetail.date}
+            isLast
+          />
+        </Stack>
+      </Card>
+
+      <Card>
+        <Stack gap={0}>
+          <DetailRow
+            key='entry-price'
+            label="Entry price"
+            value={ticketDetail.price_open}
+          />
+
+          {type === 'closed' && 
+            <>
+              <DetailRow
+                key='exit-price'
+                label="Exit price"
+                value={ticketDetail.price_exit}
+              />
+
+              <DetailRow
+                key='profit'
+                label="Profit"
+                customValue={<ProfitText value={ticketDetail.profit} />}
+                isLast
+              />
+            </>
+          }
+
+          {type === 'open' && 
+            <>
+              <DetailRow
+                key='current-price'
+                label="Current price"
+                value={ticketDetail.price_current}
+              />
+
+              <DetailRow
+                key='floating-profit'
+                label="Floating profit"
+                customValue={<ProfitText value={ticketDetail.profit} />}
+                isLast
+              />
+            </>
+          }
+        </Stack>
+      </Card>
     </View>
   );
 }

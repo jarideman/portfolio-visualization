@@ -7,4 +7,10 @@ export const positionService = {
 
     return response.data
   },
+
+  async getPosition(type: PositionType, ticket: number) {
+    const response = await http.get(`positions/${type}/${ticket}`)
+
+    return response.data
+  },
 }

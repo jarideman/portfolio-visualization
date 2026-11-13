@@ -13,23 +13,23 @@
     - [ ] ALL
 
   ## Portfolio Summary
-  - [ ] Total Portfolio Value
-  - [ ] Total P&L
-  - [ ] Total Return (%)
-  - [ ] Today's P&L
-  - [ ] Cash Balance
+  - [x] Total Portfolio Value
+  - [x] Total P&L
+  - [x] Total Return (%)
+  - [x] Today's P&L
+  - [x] Cash Balance
 
   ## Risk Overview
-  - [ ] Maximum Drawdown
-  - [ ] Win Rate
-  - [ ] Profit Factor
-  - [ ] Average Win
-  - [ ] Average Loss
+  - [x] Maximum Drawdown
+  - [x] Win Rate
+  - [x] Profit Factor
+  - [x] Average Win
+  - [x] Average Loss
 
   ## Portfolio Allocation
-  - [ ] Allocation by asset
-  - [ ] Allocation by percentage
-  - [ ] Allocation chart
+  - [x] Allocation by asset
+  - [x] Allocation by percentage
+  - [x] Allocation chart
 
 # Trades
   ## Open trades
