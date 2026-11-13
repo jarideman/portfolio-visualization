@@ -19,3 +19,9 @@ export interface DateRangeValue {
   start?: string;
   end?: string;
 }
+
+export interface DetailRowItem {
+  label: string;
+  value?: string | number;
+  customValue?: React.ReactNode;
+}

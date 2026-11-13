@@ -7,11 +7,16 @@ import type { PositionType } from "../positions/types";
 import { DetailRow } from "../shared/components/DetailRow";
 import { firstToUpper } from "../shared/utils/firstToUpper";
 import ProfitText from "../shared/components/ProfitText";
+import type { DetailRowItem } from "../shared/types";
 
 export default function TradeDetail() {
-  const { type, ticket } = useParams<{ ticket: string; type: PositionType; }>();
+  const { type, ticket } = useParams<{ ticket: string; type: PositionType }>();
 
-  const { data: ticketDetail, isPending, error } = usePositionDetail(type as PositionType, Number(ticket))
+  const {
+    data: ticketDetail,
+    isPending,
+    error,
+  } = usePositionDetail(type as PositionType, Number(ticket));
 
   const chartdata = [
     { date: "Mar 01", open: 136, high: 142, low: 133, close: 140 },
@@ -36,16 +41,66 @@ export default function TradeDetail() {
     { date: "Mar 20", open: 161, high: 168, low: 160, close: 166 },
   ];
 
-  if (isPending) return "Loading...";
+  if (isPending) {
+    return <Text c="dimmed">Loading trade information...</Text>;
+  }
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) {
+    return <Text c="red">{error.message}</Text>;
+  }
+
+  const tradeDetailCards: DetailRowItem[][] = [
+    [
+      {
+        label: "Type",
+        value: firstToUpper(ticketDetail.type),
+      },
+      {
+        label: "Volume",
+        value: ticketDetail.volume,
+      },
+      {
+        label: "date",
+        value: firstToUpper(ticketDetail.date),
+      },
+    ],
+    [
+      {
+        label: "Entry price",
+        value: ticketDetail.price_open,
+      },
+      ...(type === "closed" ?
+        [
+          {
+            label: "Exit price",
+            value: ticketDetail.price_exit,
+          },
+        ]
+        : []),
+      ...(type === "open" ?
+        [
+          {
+            label: "Current price",
+            value: ticketDetail.price_current,
+          },
+        ]
+        : []),
+      {
+        label: type === 'open' ? "Floating profit" : "Profit",
+        customValue: <ProfitText value={ticketDetail.profit} />,
+      }
+    ],
+  ];
 
   return (
     <View>
-      <Text>{ticket}</Text>
+      <Text>
+        {ticket} - {ticketDetail.symbol}
+      </Text>
 
-      <Text>Symbol: {ticketDetail.symbol}</Text>
-       {/* time frame filter? */}
+      {/* time frame filter? */}
+      {/* show entry and exit/current */}
+      {/* show sl en tp for open order */}
       <CandlestickChart
         h={500}
         data={chartdata}
@@ -53,72 +108,21 @@ export default function TradeDetail() {
         tickLine="none"
       />
 
-      <Card>
-        <Stack gap={0}>
-          <DetailRow
-            key='type'
-            label="Type"
-            value={firstToUpper(ticketDetail.type)}
-          />
-
-          <DetailRow
-            key='volume'
-            label="Volume"
-            value={ticketDetail.volume}
-          />
-
-          <DetailRow
-            key='date'
-            label="Date"
-            value={ticketDetail.date}
-            isLast
-          />
-        </Stack>
-      </Card>
-
-      <Card>
-        <Stack gap={0}>
-          <DetailRow
-            key='entry-price'
-            label="Entry price"
-            value={ticketDetail.price_open}
-          />
-
-          {type === 'closed' && 
-            <>
+      {tradeDetailCards.map((items, index) => (
+        <Card key={index}>
+          <Stack gap={0}>
+            {items.map((item, itemIndex) => (
               <DetailRow
-                key='exit-price'
-                label="Exit price"
-                value={ticketDetail.price_exit}
+                key={item.label}
+                label={item.label}
+                value={item.value}
+                customValue={item.customValue}
+                isLast={itemIndex === items.length - 1}
               />
-
-              <DetailRow
-                key='profit'
-                label="Profit"
-                customValue={<ProfitText value={ticketDetail.profit} />}
-                isLast
-              />
-            </>
-          }
-
-          {type === 'open' && 
-            <>
-              <DetailRow
-                key='current-price'
-                label="Current price"
-                value={ticketDetail.price_current}
-              />
-
-              <DetailRow
-                key='floating-profit'
-                label="Floating profit"
-                customValue={<ProfitText value={ticketDetail.profit} />}
-                isLast
-              />
-            </>
-          }
-        </Stack>
-      </Card>
+            ))}
+          </Stack>
+        </Card>
+      ))}
     </View>
   );
 }
