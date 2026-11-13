@@ -21,6 +21,7 @@ import { profitFilter } from "../../shared/utils/profitFilter";
 import { multiSelectFilter } from "../../shared/utils/multiSelectFilter";
 import { usePositions } from "../hooks/use-positions";
 import { firstToUpper } from "../../shared/utils/firstToUpper";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   type: PositionType;
@@ -33,6 +34,7 @@ type ColumnFilter = {
 
 export function PositionsTable({ type }: Props) {
   const { data, isPending, error } = usePositions(type);
+  const navigate = useNavigate();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
 
@@ -165,6 +167,7 @@ export function PositionsTable({ type }: Props) {
         tableKey={`${type}-positions-table`}
         data={data}
         columns={columns}
+        onPress={(row) => navigate(`/trades/${row.ticket}`)}
         columnFilters={columnFilters}
         onColumnFiltersChange={setColumnFilters}
         badges={

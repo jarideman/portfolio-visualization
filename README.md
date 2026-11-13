@@ -63,7 +63,8 @@
   - [x] Date
 
   ## Visual
-  - [ ] Show trade in bars
+  - [ ] Show historic trade in chart
+  - [ ] Show open trade in chart with tp & sl lines
 
 
 # Account info

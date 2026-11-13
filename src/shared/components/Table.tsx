@@ -41,6 +41,7 @@ type Props<TData extends RowData> = {
   tableKey: string;
   data: TData[];
   columns: ColumnDef<TableFeatures, TData, unknown>[];
+  onPress?: (row: TData) => void;
   columnFilters?: ColumnFiltersState;
   onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
   badges?: ReactNode;
@@ -50,6 +51,7 @@ export function Table<TData extends RowData>({
   tableKey,
   data,
   columns,
+  onPress,
   columnFilters = [],
   onColumnFiltersChange,
   badges,
@@ -92,10 +94,7 @@ export function Table<TData extends RowData>({
       <Stack gap="sm" mb="md">
         <Group justify="space-between" align="center" wrap="nowrap" mt={10}>
           {badges && (
-            <ScrollArea
-              type="never"
-              style={{ flex: 1, minWidth: 0 }}
-            >
+            <ScrollArea type="never" style={{ flex: 1, minWidth: 0 }}>
               {badges}
             </ScrollArea>
           )}
@@ -114,9 +113,7 @@ export function Table<TData extends RowData>({
                   </Badge>
                 ) : undefined
               }
-              onClick={() =>
-                setFiltersOpened((prev) => !prev)
-              }
+              onClick={() => setFiltersOpened((prev) => !prev)}
             >
               Filters
             </Button>
@@ -124,12 +121,7 @@ export function Table<TData extends RowData>({
         </Group>
 
         {filtersOpened && (
-          <Paper
-            p="md"
-            radius="md"
-            withBorder
-            bg="var(--mantine-color-body)"
-          >
+          <Paper p="md" radius="md" withBorder bg="var(--mantine-color-body)">
             <Stack gap="md">
               <Group justify="space-between">
                 <Text size="sm" fw={600}>
@@ -143,16 +135,11 @@ export function Table<TData extends RowData>({
 
               <Group align="flex-start" gap="md">
                 {table.getAllLeafColumns().map((column) => {
-                  const FilterComponent =
-                    column.columnDef.meta?.Filter;
+                  const FilterComponent = column.columnDef.meta?.Filter;
 
-                  const filterProps =
-                    column.columnDef.meta?.filterProps;
+                  const filterProps = column.columnDef.meta?.filterProps;
 
-                  if (
-                    !column.getCanFilter() ||
-                    !FilterComponent
-                  ) {
+                  if (!column.getCanFilter() || !FilterComponent) {
                     return null;
                   }
 
@@ -171,10 +158,7 @@ export function Table<TData extends RowData>({
                           : column.id}
                       </Text>
 
-                      <FilterComponent
-                        column={column}
-                        {...filterProps}
-                      />
+                      <FilterComponent column={column} {...filterProps} />
                     </Stack>
                   );
                 })}
@@ -184,12 +168,7 @@ export function Table<TData extends RowData>({
         )}
       </Stack>
 
-      <MantineTable
-        striped
-        highlightOnHover
-        withTableBorder
-        withColumnBorders
-      >
+      <MantineTable striped highlightOnHover withTableBorder withColumnBorders>
         <MantineTable.Thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <MantineTable.Tr key={headerGroup.id}>
@@ -202,17 +181,12 @@ export function Table<TData extends RowData>({
                       gap="xs"
                       wrap="nowrap"
                       style={{
-                        cursor: column.getCanSort()
-                          ? "pointer"
-                          : "default",
+                        cursor: column.getCanSort() ? "pointer" : "default",
                         userSelect: "none",
                       }}
                       onClick={column.getToggleSortingHandler()}
                     >
-                      {flexRender(
-                        column.columnDef.header,
-                        header.getContext()
-                      )}
+                      {flexRender(column.columnDef.header, header.getContext())}
 
                       {column.getCanSort() && (
                         <>
@@ -221,10 +195,7 @@ export function Table<TData extends RowData>({
                           ) : column.getIsSorted() === "desc" ? (
                             <ArrowDown size={14} />
                           ) : (
-                            <ArrowUpDown
-                              size={14}
-                              opacity={0.4}
-                            />
+                            <ArrowUpDown size={14} opacity={0.4} />
                           )}
                         </>
                       )}
@@ -239,28 +210,24 @@ export function Table<TData extends RowData>({
         <MantineTable.Tbody>
           {table.getRowModel().rows.length > 0 ? (
             table.getRowModel().rows.map((row) => (
-              <MantineTable.Tr key={row.id}>
+              <MantineTable.Tr
+                key={row.id}
+                onClick={() => onPress?.(row.original)}
+                style={{
+                  cursor: onPress ? "pointer" : "default",
+                }}
+              >
                 {row.getAllCells().map((cell) => (
                   <MantineTable.Td key={cell.id}>
-                    {flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext()
-                    )}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </MantineTable.Td>
                 ))}
               </MantineTable.Tr>
             ))
           ) : (
             <MantineTable.Tr>
-              <MantineTable.Td
-                colSpan={table.getAllLeafColumns().length}
-              >
-                <Text
-                  size="sm"
-                  c="dimmed"
-                  ta="center"
-                  py="md"
-                >
+              <MantineTable.Td colSpan={table.getAllLeafColumns().length}>
+                <Text size="sm" c="dimmed" ta="center" py="md">
                   No records found.
                 </Text>
               </MantineTable.Td>

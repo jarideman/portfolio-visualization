@@ -19,4 +19,19 @@ export const theme = createTheme({
       "#101827",
     ],
   },
+
+  components: {
+    Card: {
+      defaultProps: {
+        bg: "dark.7",
+        c: "gray.0",
+        radius: "lg",
+        p: "lg",
+        withBorder: true,
+        style: {
+          borderColor: "#263247",
+        },
+      },
+    },
+  },
 });

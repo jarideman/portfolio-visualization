@@ -4,12 +4,14 @@ type DetailRowProps = {
   label: string;
   value?: string | number;
   customValue?: React.ReactNode;
+  isLast?: boolean;
 };
 
 export function DetailRow({
   label,
   value,
   customValue,
+  isLast = false,
 }: DetailRowProps) {
   return (
     <Group
@@ -18,9 +20,11 @@ export function DetailRow({
       py="md"
       gap="md"
       wrap="nowrap"
-      style={{
-        borderBottom: "1px solid #263247",
-      }}
+      style={
+        !isLast
+          ? { borderBottom: "1px solid #263247" }
+          : {}
+      }
     >
       <Text
         c="dimmed"
@@ -30,19 +34,21 @@ export function DetailRow({
         {label}
       </Text>
 
-      {customValue ?? (
-        <Text
-          c="gray.0"
-          size="sm"
-          fw={500}
-          ta="right"
-          style={{
-            overflowWrap: "anywhere",
-          }}
-        >
-          {value}
-        </Text>
-      )}
-    </Group>
+      {
+        customValue ?? (
+          <Text
+            c="gray.0"
+            size="sm"
+            fw={500}
+            ta="right"
+            style={{
+              overflowWrap: "anywhere",
+            }}
+          >
+            {value}
+          </Text>
+        )
+      }
+    </Group >
   );
 }

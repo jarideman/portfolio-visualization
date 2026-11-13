@@ -77,17 +77,6 @@ export default function AccountInfo() {
     },
   ];
 
-  const cardProps = {
-    bg: "dark.7",
-    c: "gray.0",
-    radius: "lg",
-    p: "lg",
-    withBorder: true,
-    style: {
-      borderColor: "#263247",
-    },
-  };
-
   return (
     <Stack w="100%" mih="100vh" gap="xl">
 
@@ -121,7 +110,7 @@ export default function AccountInfo() {
         }}
         spacing="lg"
       >
-        <Card {...cardProps}>
+        <Card>
           <Group gap="sm" mb="md">
             <ThemeIcon
               color="blue"
@@ -140,17 +129,18 @@ export default function AccountInfo() {
           <Divider color="dark.4" mb="xs" />
 
           <Stack gap={0}>
-            {accountDetails.map((detail) => (
+            {accountDetails.map((detail, index) => (
               <DetailRow
                 key={detail.label}
                 label={detail.label}
                 value={detail.value}
+                isLast={accountDetails.length - 1 === index}
               />
             ))}
           </Stack>
         </Card>
 
-        <Card {...cardProps}>
+        <Card>
           <Group gap="sm" mb="md">
             <ThemeIcon
               color="blue"
@@ -181,10 +171,10 @@ export default function AccountInfo() {
               customValue={
                 <StatusBadge enabled={accountInfo.trade_expert} />
               }
+              isLast
             />
           </Stack>
         </Card>
-
       </SimpleGrid>
     </Stack>
   );
