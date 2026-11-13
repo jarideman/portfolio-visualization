@@ -4,13 +4,13 @@ export interface FilterProps {
   column: Column<any, any>;
 }
 
-export interface FilterOption {
+export interface ValueItem {
   label: string;
   value: string;
 }
 
 export interface OptionsFilterProps extends FilterProps {
-  options?: FilterOption[];
+  options?: ValueItem[];
   multiple?: boolean;
   placeholder?: string;
 }

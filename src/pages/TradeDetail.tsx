@@ -33,12 +33,28 @@ export default function TradeDetail() {
     <View>
       <Text>{ticket}</Text>
 
+    <Text>Symbol: BTCUSd</Text>
+       {/* time frame filter? */}
       <CandlestickChart
-        h={300}
+        h={500}
         data={chartdata}
         dataKey="date"
         tickLine="none"
       />
+
+      <Text>Type</Text>
+      <Text>Entry</Text>
+      <Text>Exit</Text>
+      <Text>Profit</Text>
+      <Text>Volume</Text>
+      <Text>Date</Text>
+
+      <Text>Type</Text>
+      <Text>Entry</Text>
+      <Text>Current</Text>
+      <Text>Floating profit</Text>
+      <Text>Volume</Text>
+      <Text>Date</Text>
     </View>
   );
 }

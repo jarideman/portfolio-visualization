@@ -49,6 +49,7 @@ export default function Dashboard() {
             Performance chart
           </Text>
 
+          {/* time frame filter */}
           <LineChart
             h={300}
             data={performanceData}
@@ -96,7 +97,7 @@ export default function Dashboard() {
         <Card>
           <Group gap="sm" mb="md">
             <Text fw={600} size="md">
-              Portfolio summary
+              Risk overview
             </Text>
           </Group>
 
