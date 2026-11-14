@@ -25,3 +25,16 @@ export interface DetailRowItem {
   value?: string | number;
   customValue?: React.ReactNode;
 }
+
+export const TIME_FILTERS = [
+  { label: "1D", value: "1D" },
+  { label: "1W", value: "1W" },
+  { label: "1M", value: "1M" },
+  { label: "3M", value: "3M" },
+  { label: "6M", value: "6M" },
+  { label: "YTD", value: "YTD" },
+  { label: "1Y", value: "1Y" },
+  { label: "ALL", value: "ALL" },
+] as const;
+
+export type TimeFilter = (typeof TIME_FILTERS)[number]["value"];

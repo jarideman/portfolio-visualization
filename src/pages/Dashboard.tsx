@@ -6,8 +6,13 @@ import { DetailRow } from "../shared/components/DetailRow";
 import { usePortfolioDetails } from "../account/hooks/use-portfolio-details";
 import { useRiskDetails } from "../account/hooks/use-risk-details";
 import { usePerformanceData } from "../account/hooks/use-performance-data";
+import { useState } from "react";
+import type { TimeFilter } from "../shared/types";
+import { TimeFilterSelector } from "../shared/components/filters/TimeFilterSelector";
 
 export default function Dashboard() {
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>("1M");
+
   const {
     data: performanceData,
     isPending: isPendingPerformance,
@@ -45,11 +50,17 @@ export default function Dashboard() {
     <View>
       <SimpleGrid spacing="lg">
         <View>
-          <Text fw={600} size="md" mb={20}>
-            Performance chart
-          </Text>
+          <Group justify="space-between" align="center" mb="xl">
+            <Text fw={600} size="md">
+              Performance chart
+            </Text>
 
-          {/* time frame filter */}
+            <TimeFilterSelector
+              value={timeFilter}
+              onChange={setTimeFilter}
+            />
+          </Group>
+
           <LineChart
             h={300}
             data={performanceData}
@@ -67,7 +78,6 @@ export default function Dashboard() {
       <SimpleGrid
         cols={{
           base: 1,
-          sm: 2,
           lg: 3,
         }}
         spacing="lg"

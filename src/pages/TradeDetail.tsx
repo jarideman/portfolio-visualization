@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { Card, SimpleGrid, Stack, Text } from "@mantine/core";
+import { Card, Group, SimpleGrid, Stack, Text } from "@mantine/core";
 import { CandlestickChart } from "@mantine/charts";
 import { useParams } from "react-router-dom";
 import { usePositionDetail } from "../positions/hooks/use-position-detail";
@@ -7,10 +7,14 @@ import type { PositionType } from "../positions/types";
 import { DetailRow } from "../shared/components/DetailRow";
 import { firstToUpper } from "../shared/utils/firstToUpper";
 import ProfitText from "../shared/components/ProfitText";
-import type { DetailRowItem } from "../shared/types";
+import type { DetailRowItem, TimeFilter } from "../shared/types";
+import { TimeFilterSelector } from "../shared/components/filters/TimeFilterSelector";
+import { useState } from "react";
 
 export default function TradeDetail() {
   const { type, ticket } = useParams<{ ticket: string; type: PositionType }>();
+
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>("1M");
 
   const {
     data: ticketDetail,
@@ -60,7 +64,7 @@ export default function TradeDetail() {
         value: ticketDetail.volume,
       },
       {
-        label: "date",
+        label: "Date",
         value: firstToUpper(ticketDetail.date),
       },
     ],
@@ -94,10 +98,16 @@ export default function TradeDetail() {
 
   return (
     <View>
-      <Text>
-        {ticket} - {ticketDetail.symbol}
-      </Text>
+          <Group justify="space-between" align="center" mb="xl">
+            <Text fw={600} size="md">
+              {ticket} - {ticketDetail.symbol}
+            </Text>
 
+            <TimeFilterSelector
+              value={timeFilter}
+              onChange={setTimeFilter}
+            />
+          </Group>
       {/* time frame filter? */}
       {/* show entry and exit/current */}
       {/* show sl en tp for open order */}
