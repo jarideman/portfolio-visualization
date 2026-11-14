@@ -28,7 +28,7 @@ function AppLayout() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/trades" element={<Trades />} />
-          <Route path="/trades/:ticket" element={<TradeDetail />} />
+          <Route path="/trades/:type/:ticket" element={<TradeDetail />} />
           <Route path="/account" element={<AccountInfo />} />
         </Routes>
       </main>
