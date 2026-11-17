@@ -167,7 +167,7 @@ export function PositionsTable({ type }: Props) {
         tableKey={`${type}-positions-table`}
         data={data}
         columns={columns}
-        onPress={(row) => navigate(`/trades/${row.ticket}`)}
+        onPress={(row) => navigate(`/trades/${type}/${row.ticket}`)}
         columnFilters={columnFilters}
         onColumnFiltersChange={setColumnFilters}
         badges={

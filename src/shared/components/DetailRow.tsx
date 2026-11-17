@@ -1,9 +1,7 @@
 import { Group, Text } from "@mantine/core";
+import type { DetailRowItem } from "../types";
 
-type DetailRowProps = {
-  label: string;
-  value?: string | number;
-  customValue?: React.ReactNode;
+interface DetailRowProps extends DetailRowItem {
   isLast?: boolean;
 };
 

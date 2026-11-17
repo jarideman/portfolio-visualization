@@ -1,36 +1,35 @@
 # Dashboard
-  ## Portfolio Summary
-  - [ ] Total Portfolio Value
-  - [ ] Total P&L
-  - [ ] Total Return (%)
-  - [ ] Today's P&L
-  - [ ] Cash Balance
-
   ## Performance Chart
-  - [ ] Portfolio value over time
-  - [ ] P&L over time
-  - [ ] Time filters:
-    - [ ] 1D
-    - [ ] 1W
-    - [ ] 1M
-    - [ ] 3M
-    - [ ] 6M
-    - [ ] YTD
-    - [ ] 1Y
-    - [ ] ALL
+  - [x] Portfolio value over time
+  - [x] P&L over time
+  - [x] Time filters:
+    - [x] 1D
+    - [x] 1W
+    - [x] 1M
+    - [x] 3M
+    - [x] 6M
+    - [x] YTD
+    - [x] 1Y
+    - [x] ALL
 
-  ## Portfolio Allocation
-  - [ ] Allocation by asset
-  - [ ] Allocation by percentage
-  - [ ] Allocation chart
+  ## Portfolio Summary
+  - [x] Total Portfolio Value
+  - [x] Total P&L
+  - [x] Total Return (%)
+  - [x] Today's P&L
+  - [x] Cash Balance
 
   ## Risk Overview
-  - [ ] Maximum Drawdown
-  - [ ] Win Rate
-  - [ ] Profit Factor
-  - [ ] Average Win
-  - [ ] Average Loss
+  - [x] Maximum Drawdown
+  - [x] Win Rate
+  - [x] Profit Factor
+  - [x] Average Win
+  - [x] Average Loss
 
+  ## Portfolio Allocation
+  - [x] Allocation by asset
+  - [x] Allocation by percentage
+  - [x] Allocation chart
 
 # Trades
   ## Open trades

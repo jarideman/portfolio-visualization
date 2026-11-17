@@ -1,4 +1,5 @@
 import http from "../../shared/services/http-service"
+import type { TimeFilter } from "../../shared/types"
 
 export const accountService = {
   async getAccountInfo() {
@@ -25,8 +26,10 @@ export const accountService = {
     return response.data
   },
 
-  async getPerformanceData() {
-    const response = await http.get('account/performance')
+  async getPerformanceData(timeFilter: TimeFilter) {
+    const response = await http.get('account/performance', {
+      params: { filter: timeFilter }
+    })
 
     return response.data
   },

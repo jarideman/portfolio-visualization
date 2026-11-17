@@ -14,7 +14,7 @@ export default function ProfitText({ value }: Props) {
 
 
     return (
-        <Text component="span" c={color}>
+        <Text size="sm" c={color}>
             {value.toFixed(2)}
         </Text>
     );
