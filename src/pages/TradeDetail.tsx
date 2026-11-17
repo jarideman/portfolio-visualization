@@ -93,8 +93,8 @@ export default function TradeDetail() {
         />
       </Group>
 
-      {/* show entry and exit/current */}
-      {/* show sl en tp for open order */}
+      {/* Show entry and exit/current */}
+      {/* Show sl en tp for open order */}
       <CandlestickChart
         h={500}
         data={chartData}

@@ -16,7 +16,7 @@ export const TimeFilterSelector = ({
         {TIME_FILTERS.map((filter) => {
           const isActive = value === filter.value;
 
-          // Move to styling file
+          // Move to styling file.
           return (
             <Button
               key={filter.value}
