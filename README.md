@@ -1,16 +1,16 @@
 # Dashboard
   ## Performance Chart
-  - [ ] Portfolio value over time
-  - [ ] P&L over time
-  - [ ] Time filters:
-    - [ ] 1D
-    - [ ] 1W
-    - [ ] 1M
-    - [ ] 3M
-    - [ ] 6M
-    - [ ] YTD
-    - [ ] 1Y
-    - [ ] ALL
+  - [x] Portfolio value over time
+  - [x] P&L over time
+  - [x] Time filters:
+    - [x] 1D
+    - [x] 1W
+    - [x] 1M
+    - [x] 3M
+    - [x] 6M
+    - [x] YTD
+    - [x] 1Y
+    - [x] ALL
 
   ## Portfolio Summary
   - [x] Total Portfolio Value
