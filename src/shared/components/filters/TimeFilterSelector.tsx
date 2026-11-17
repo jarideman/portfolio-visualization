@@ -16,7 +16,6 @@ export const TimeFilterSelector = ({
         {TIME_FILTERS.map((filter) => {
           const isActive = value === filter.value;
 
-          // Move to styling file.
           return (
             <Button
               key={filter.value}
@@ -25,25 +24,9 @@ export const TimeFilterSelector = ({
               variant={isActive ? "filled" : "light"}
               color={isActive ? "blue" : "dark"}
               onClick={() => onChange(filter.value)}
-              styles={{
-                root: {
-                  flexShrink: 0,
-                  backgroundColor: isActive
-                    ? "#2563EB"
-                    : "#1E293B",
-                  border: `1px solid ${isActive ? "#2563EB" : "#334155"
-                    }`,
-                  color: isActive ? "#FFFFFF" : "#94A3B8",
-                  "&:hover": {
-                    backgroundColor: isActive
-                      ? "#1D4ED8"
-                      : "#334155",
-                  },
-                },
-                label: {
-                  fontWeight: 600,
-                },
-              }}
+              bg={isActive
+                ? "blue"
+                : "gray.9"}
             >
               {filter.label}
             </Button>
