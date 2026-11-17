@@ -92,7 +92,7 @@ export default function TradeDetail() {
           onChange={setTimeFilter}
         />
       </Group>
-      {/* time frame filter? */}
+
       {/* show entry and exit/current */}
       {/* show sl en tp for open order */}
       <CandlestickChart
@@ -100,6 +100,7 @@ export default function TradeDetail() {
         data={chartData}
         dataKey="date"
         tickLine="none"
+        valueFormatter={(value) => Number(value).toFixed(2)}
       />
 
       <SimpleGrid
