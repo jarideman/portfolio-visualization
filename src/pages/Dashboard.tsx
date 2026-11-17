@@ -17,7 +17,7 @@ export default function Dashboard() {
     data: performanceData,
     isPending: isPendingPerformance,
     error: performanceError,
-  } = usePerformanceData();
+  } = usePerformanceData(timeFilter);
 
   const {
     data: allocationData,

@@ -30,9 +30,8 @@ export const TimeFilterSelector = ({
                   backgroundColor: isActive
                     ? "#2563EB"
                     : "#1E293B",
-                  border: `1px solid ${
-                    isActive ? "#2563EB" : "#334155"
-                  }`,
+                  border: `1px solid ${isActive ? "#2563EB" : "#334155"
+                    }`,
                   color: isActive ? "#FFFFFF" : "#94A3B8",
                   "&:hover": {
                     backgroundColor: isActive
