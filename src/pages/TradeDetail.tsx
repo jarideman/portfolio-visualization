@@ -3,7 +3,7 @@ import { Card, Group, SimpleGrid, Stack, Text } from "@mantine/core";
 import { CandlestickChart } from "@mantine/charts";
 import { useParams } from "react-router-dom";
 import { usePositionDetail } from "../positions/hooks/use-position-detail";
-import type { PositionType } from "../positions/types";
+import type { PositionStatus } from "../positions/types";
 import { DetailRow } from "../shared/components/DetailRow";
 import { firstToUpper } from "../shared/utils/firstToUpper";
 import ProfitText from "../shared/components/ProfitText";
@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useSymbolData } from "../shared/hooks/use-symbol-data";
 
 export default function TradeDetail() {
-  const { type, ticket } = useParams<{ ticket: string; type: PositionType }>();
+  const { status, ticket } = useParams<{ ticket: string; status: PositionStatus }>();
 
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("1M");
 
@@ -21,7 +21,7 @@ export default function TradeDetail() {
     data: ticketDetail,
     isPending: ticketDetailPending,
     error: ticketDetailError,
-  } = usePositionDetail(type as PositionType, Number(ticket));
+  } = usePositionDetail(status as PositionStatus, Number(ticket));
 
   const { data: chartData, isPending: chartDataPending, error: chartDataError } = useSymbolData(ticketDetail?.symbol, timeFilter)
 
@@ -57,7 +57,7 @@ export default function TradeDetail() {
         label: "Entry price",
         value: ticketDetail.price_open,
       },
-      ...(type === "closed" ?
+      ...(status === "closed" ?
         [
           {
             label: "Exit price",
@@ -65,7 +65,7 @@ export default function TradeDetail() {
           },
         ]
         : []),
-      ...(type === "open" ?
+      ...(status === "open" ?
         [
           {
             label: "Current price",
@@ -74,7 +74,7 @@ export default function TradeDetail() {
         ]
         : []),
       {
-        label: type === 'open' ? "Floating profit" : "Profit",
+        label: status === 'open' ? "Floating profit" : "Profit",
         customValue: <ProfitText value={ticketDetail.profit} />,
       }
     ],
@@ -101,6 +101,14 @@ export default function TradeDetail() {
         dataKey="date"
         tickLine="none"
         valueFormatter={(value) => Number(value).toFixed(2)}
+        referenceLines={
+          ticketDetail.status === 'open'
+            ? [
+              { y: ticketDetail.stop_loss, label: 'Stop loss', color: 'red.6' },
+              { y: ticketDetail.take_profit, label: 'Take profit', color: 'teal.6' },
+            ]
+            : []
+        }
       />
 
       <SimpleGrid

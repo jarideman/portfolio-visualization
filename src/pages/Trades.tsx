@@ -19,7 +19,7 @@ export default function Trades() {
 
         {tabs.map((tab) => (
           <Tabs.Panel key={tab} value={tab}>
-            <PositionsTable type={tab} />
+            <PositionsTable status={tab} />
           </Tabs.Panel>
         ))}
       </Tabs>

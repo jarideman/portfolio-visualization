@@ -1,14 +1,16 @@
 export interface Position {
   ticket: number;
   symbol: string;
-  status: string;
+  status: PositionStatus;
   type: string;
   volume: number;
   price_open: number;
   price_current?: number;
   price_exit?: number;
+  stop_loss?: number;
+  take_profit?: number;
   profit: number;
   date: string;
 };
 
-export type PositionType = "open" | "closed"
+export type PositionStatus = "open" | "closed"

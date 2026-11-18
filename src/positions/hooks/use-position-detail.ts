@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 import { positionService } from "../services/position-service.http"
-import type { Position, PositionType } from "../types"
+import type { Position, PositionStatus } from "../types"
 
-export function usePositionDetail(type: PositionType, ticket: number) {
+export function usePositionDetail(status: PositionStatus, ticket: number) {
   return useQuery<Position>({
-    queryKey: [type, 'position', ticket],
-    queryFn: async () => positionService.getPosition(type, ticket),
-    enabled: Boolean(type) && Boolean(ticket),
+    queryKey: [status, 'position', ticket],
+    queryFn: async () => positionService.getPosition(status, ticket),
+    enabled: Boolean(status) && Boolean(ticket),
   })
 }

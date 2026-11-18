@@ -1,15 +1,15 @@
 import http from "../../shared/services/http-service"
-import type { PositionType } from "../types"
+import type { PositionStatus } from "../types"
 
 export const positionService = {
-  async getPositions(type: PositionType) {
-    const response = await http.get(`positions/${type}`)
+  async getPositions(status: PositionStatus) {
+    const response = await http.get(`positions/${status}`)
 
     return response.data
   },
 
-  async getPosition(type: PositionType, ticket: number) {
-    const response = await http.get(`positions/${type}/${ticket}`)
+  async getPosition(status: PositionStatus, ticket: number) {
+    const response = await http.get(`positions/${status}/${ticket}`)
 
     return response.data
   },
