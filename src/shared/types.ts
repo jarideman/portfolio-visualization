@@ -20,6 +20,14 @@ export interface DateRangeValue {
   end?: string;
 }
 
+export interface Candle {
+  date: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+}
+
 export interface DetailRowItem {
   label: string;
   value?: string | number;

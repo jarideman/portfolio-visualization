@@ -8,7 +8,7 @@ import {
   type TableFeatures,
 } from "@tanstack/react-table";
 
-import type { Position, PositionType } from "../types";
+import type { Position, PositionStatus } from "../types";
 
 import { Table } from "../../shared/components/Table";
 import ProfitText from "../../shared/components/ProfitText";
@@ -24,7 +24,7 @@ import { firstToUpper } from "../../shared/utils/firstToUpper";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  type: PositionType;
+  status: PositionStatus;
 };
 
 type ColumnFilter = {
@@ -32,15 +32,15 @@ type ColumnFilter = {
   value: unknown;
 };
 
-export function PositionsTable({ type }: Props) {
-  const { data, isPending, error } = usePositions(type);
+export function PositionsTable({ status }: Props) {
+  const { data, isPending, error } = usePositions(status);
   const navigate = useNavigate();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
 
   useEffect(() => {
     setColumnFilters([]);
-  }, [type]);
+  }, [status]);
 
   const selectedSymbols =
     (columnFilters.find((filter) => filter.id === "symbol")
@@ -106,7 +106,7 @@ export function PositionsTable({ type }: Props) {
       accessorKey: "price_open",
       header: "Entry price",
     },
-    ...(type === "closed"
+    ...(status === "closed"
       ? [
         {
           accessorKey: "price_exit",
@@ -114,7 +114,7 @@ export function PositionsTable({ type }: Props) {
         },
       ]
       : []),
-    ...(type === "open"
+    ...(status === "open"
       ? [
         {
           accessorKey: "price_current",
@@ -164,10 +164,10 @@ export function PositionsTable({ type }: Props) {
   return (
     <ScrollView>
       <Table
-        tableKey={`${type}-positions-table`}
+        tableKey={`${status}-positions-table`}
         data={data}
         columns={columns}
-        onPress={(row) => navigate(`/trades/${type}/${row.ticket}`)}
+        onPress={(row) => navigate(`/trades/${status}/${row.ticket}`)}
         columnFilters={columnFilters}
         onColumnFiltersChange={setColumnFilters}
         badges={

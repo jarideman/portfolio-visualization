@@ -3,7 +3,7 @@ import { Card, Group, SimpleGrid, Stack, Text } from "@mantine/core";
 import { CandlestickChart } from "@mantine/charts";
 import { useParams } from "react-router-dom";
 import { usePositionDetail } from "../positions/hooks/use-position-detail";
-import type { PositionType } from "../positions/types";
+import type { PositionStatus } from "../positions/types";
 import { DetailRow } from "../shared/components/DetailRow";
 import { firstToUpper } from "../shared/utils/firstToUpper";
 import ProfitText from "../shared/components/ProfitText";
@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useSymbolData } from "../shared/hooks/use-symbol-data";
 
 export default function TradeDetail() {
-  const { type, ticket } = useParams<{ ticket: string; type: PositionType }>();
+  const { status, ticket } = useParams<{ ticket: string; status: PositionStatus }>();
 
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("1M");
 
@@ -21,7 +21,7 @@ export default function TradeDetail() {
     data: ticketDetail,
     isPending: ticketDetailPending,
     error: ticketDetailError,
-  } = usePositionDetail(type as PositionType, Number(ticket));
+  } = usePositionDetail(status as PositionStatus, Number(ticket));
 
   const { data: chartData, isPending: chartDataPending, error: chartDataError } = useSymbolData(ticketDetail?.symbol, timeFilter)
 
@@ -57,7 +57,7 @@ export default function TradeDetail() {
         label: "Entry price",
         value: ticketDetail.price_open,
       },
-      ...(type === "closed" ?
+      ...(status === "closed" ?
         [
           {
             label: "Exit price",
@@ -65,7 +65,7 @@ export default function TradeDetail() {
           },
         ]
         : []),
-      ...(type === "open" ?
+      ...(status === "open" ?
         [
           {
             label: "Current price",
@@ -74,11 +74,39 @@ export default function TradeDetail() {
         ]
         : []),
       {
-        label: type === 'open' ? "Floating profit" : "Profit",
+        label: status === 'open' ? "Floating profit" : "Profit",
         customValue: <ProfitText value={ticketDetail.profit} />,
       }
     ],
   ];
+
+  const prices = chartData.flatMap((candle) => [
+    Number(candle.low),
+    Number(candle.high),
+  ]);
+
+  const entryPrice = Number(ticketDetail.price_open);
+  const stopLoss = Number(ticketDetail.stop_loss);
+  const takeProfit = Number(ticketDetail.take_profit);
+  const currentPrice = Number(ticketDetail.price_current);
+  const exitPrice = Number(ticketDetail.price_exit);
+
+  if (entryPrice > 0) prices.push(entryPrice);
+
+  if (ticketDetail.status === 'open') {
+    if (stopLoss > 0) prices.push(stopLoss);
+    if (takeProfit > 0) prices.push(takeProfit);
+    if (currentPrice > 0) prices.push(currentPrice);
+  }
+
+  if (ticketDetail.status === 'closed' && exitPrice > 0) {
+    prices.push(exitPrice);
+  }
+
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  const padding = (maxPrice - minPrice) * 0.05 || 0.01;
 
   return (
     <View>
@@ -93,14 +121,59 @@ export default function TradeDetail() {
         />
       </Group>
 
-      {/* show entry and exit/current */}
-      {/* show sl en tp for open order */}
       <CandlestickChart
         h={500}
         data={chartData}
         dataKey="date"
         tickLine="none"
         valueFormatter={(value) => Number(value).toFixed(2)}
+        yAxisProps={{
+          domain: [
+            minPrice - padding,
+            maxPrice + padding,
+          ],
+        }}
+        referenceLines={[
+          ...(entryPrice > 0
+            ? [{
+              y: entryPrice,
+              label: `ENTRY: ${entryPrice.toFixed(2)}`,
+              color: 'blue.6',
+            }]
+            : []),
+
+          ...(ticketDetail.status === 'open' && stopLoss > 0
+            ? [{
+              y: stopLoss,
+              label: `SL: ${stopLoss.toFixed(2)}`,
+              color: 'red.6',
+            }]
+            : []),
+
+          ...(ticketDetail.status === 'open' && takeProfit > 0
+            ? [{
+              y: takeProfit,
+              label: `TP: ${takeProfit.toFixed(2)}`,
+              color: 'teal.6',
+            }]
+            : []),
+
+          ...(ticketDetail.status === 'open' && currentPrice > 0
+            ? [{
+              y: currentPrice,
+              label: `CURRENT: ${currentPrice.toFixed(2)}`,
+              color: 'yellow.6',
+            }]
+            : []),
+
+          ...(ticketDetail.status === 'closed' && exitPrice > 0
+            ? [{
+              y: exitPrice,
+              label: `EXIT: ${exitPrice.toFixed(2)}`,
+              color: 'grape.6',
+            }]
+            : []),
+        ]}
       />
 
       <SimpleGrid
