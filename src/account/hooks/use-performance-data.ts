@@ -4,6 +4,7 @@ import type { TimeFilter } from "../../shared/types"
 
 export function usePerformanceData(timeFilter: TimeFilter) {
   return useQuery({
+    staleTime: 60,
     queryKey: ['account', 'performance-data', timeFilter],
     queryFn: async () => accountService.getPerformanceData(timeFilter),
   })
