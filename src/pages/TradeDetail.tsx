@@ -80,6 +80,23 @@ export default function TradeDetail() {
     ],
   ];
 
+  const prices = chartData.flatMap((candle) => [
+    Number(candle.low),
+    Number(candle.high),
+  ]);
+
+  if (ticketDetail.status === 'open') {
+    prices.push(
+      Number(ticketDetail.stop_loss),
+      Number(ticketDetail.take_profit)
+    );
+  }
+
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  const padding = (maxPrice - minPrice) * 0.05;
+
   return (
     <View>
       <Group justify="space-between" align="center" mb="xl">
@@ -94,18 +111,36 @@ export default function TradeDetail() {
       </Group>
 
       {/* Show entry and exit/current */}
-      {/* Show sl en tp for open order */}
       <CandlestickChart
         h={500}
         data={chartData}
         dataKey="date"
         tickLine="none"
         valueFormatter={(value) => Number(value).toFixed(2)}
+        yAxisProps={{
+          domain: [
+            minPrice - padding,
+            maxPrice + padding,
+          ],
+        }}
         referenceLines={
           ticketDetail.status === 'open'
             ? [
-              { y: ticketDetail.stop_loss, label: 'Stop loss', color: 'red.6' },
-              { y: ticketDetail.take_profit, label: 'Take profit', color: 'teal.6' },
+              ...(Number(ticketDetail.stop_loss) > 0
+                ? [{
+                  y: Number(ticketDetail.stop_loss),
+                  label: `SL: ${Number(ticketDetail.stop_loss).toFixed(2)}`,
+                  color: 'red.6',
+                }]
+                : []),
+
+              ...(Number(ticketDetail.take_profit) > 0
+                ? [{
+                  y: Number(ticketDetail.take_profit),
+                  label: `TP: ${Number(ticketDetail.take_profit).toFixed(2)}`,
+                  color: 'teal.6',
+                }]
+                : []),
             ]
             : []
         }
