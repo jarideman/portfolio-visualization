@@ -137,7 +137,7 @@ export default function Dashboard() {
           <Stack gap={0}>
             <PieChart
               withLabelsLine
-              labelsPosition="inside"
+              withTooltip
               labelsType="percent"
               withLabels
               data={allocationData}
