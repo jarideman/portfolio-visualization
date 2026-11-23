@@ -42,9 +42,13 @@ export default function Dashboard() {
 
   const error = performanceError || allocationsError || portfolioError || riskError;
 
-  if (isPending) return "Loading...";
+  if (isPending) {
+    return <Text>Loading account information...</Text>;
+  }
 
-  if (error) return `An error has occurred: ${error.message}`;
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
 
   return (
     <View>

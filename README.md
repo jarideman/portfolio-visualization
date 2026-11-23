@@ -1,3 +1,14 @@
+# Setup
+
+Please set up [Data Engine](https://github.com/jarideman/data-engine) as a fully functional backend API.
+
+Start the Data Engine so the api can handle the requests
+
+Run `npm install`
+
+Run `npm run dev`
+
+
 # Dashboard
   ## Performance Chart
   - [x] Portfolio value over time

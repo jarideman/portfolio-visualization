@@ -27,11 +27,11 @@ export default function AccountInfo() {
   const { data: accountInfo, isPending, error } = useAccountInfo();
 
   if (isPending) {
-    return <Text c="dimmed">Loading account information...</Text>;
+    return <Text>Loading account information...</Text>;
   }
 
   if (error) {
-    return <Text c="red">{error.message}</Text>;
+    return <Text>{error.message}</Text>;
   }
 
   const stats = [
