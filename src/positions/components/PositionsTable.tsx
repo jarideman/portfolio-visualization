@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
-import { Badge, Group } from "@mantine/core";
+import { Badge, Group, Text } from "@mantine/core";
 
 import {
   filterFn_equals,
@@ -153,9 +153,13 @@ export function PositionsTable({ status }: Props) {
     },
   ];
 
-  if (isPending) return "Loading...";
+  if (isPending) {
+    return <Text>Loading account information...</Text>;
+  }
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
 
   const badges = [
     ...new Set(data.map((item: Position) => item.symbol)),
