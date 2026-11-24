@@ -165,13 +165,19 @@ export function PositionsTable({ status }: Props) {
     ...new Set(data.map((item: Position) => item.symbol)),
   ];
 
+  const onPress = (item: Position) => {
+    navigate(`/trades/${status}/${item.position_id ?? item.ticket}`)
+
+    return
+  }
+
   return (
     <ScrollView>
       <Table
         tableKey={`${status}-positions-table`}
         data={data}
         columns={columns}
-        onPress={(row) => navigate(`/trades/${status}/${row.ticket}`)}
+        onPress={onPress}
         columnFilters={columnFilters}
         onColumnFiltersChange={setColumnFilters}
         badges={
