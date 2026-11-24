@@ -162,6 +162,7 @@ export default function TradeDetail() {
             ? [{
               y: currentPrice,
               label: `CURRENT: ${currentPrice.toFixed(2)}`,
+              labelPosition: 'insideBottomRight',
               color: 'yellow.6',
             }]
             : []),
@@ -170,6 +171,7 @@ export default function TradeDetail() {
             ? [{
               y: exitPrice,
               label: `EXIT: ${exitPrice.toFixed(2)}`,
+              labelPosition: 'insideBottomRight',
               color: 'grape.6',
             }]
             : []),
