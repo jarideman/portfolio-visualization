@@ -13,7 +13,10 @@ import { useState } from "react";
 import { useSymbolData } from "../shared/hooks/use-symbol-data";
 
 export default function TradeDetail() {
-  const { status, ticket } = useParams<{ ticket: string; status: PositionStatus }>();
+  const { status, id } = useParams<{
+    status: PositionStatus;
+    id?: string;
+  }>();
 
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("1M");
 
@@ -21,7 +24,7 @@ export default function TradeDetail() {
     data: ticketDetail,
     isPending: ticketDetailPending,
     error: ticketDetailError,
-  } = usePositionDetail(status as PositionStatus, Number(ticket));
+  } = usePositionDetail(status as PositionStatus, Number(id));
 
   const { data: chartData, isPending: chartDataPending, error: chartDataError } = useSymbolData(ticketDetail?.symbol, timeFilter)
 
@@ -112,7 +115,7 @@ export default function TradeDetail() {
     <View>
       <Group justify="space-between" align="center" mb="xl">
         <Text fw={600} size="md">
-          {ticket} - {ticketDetail.symbol}
+          {id} - {ticketDetail.symbol}
         </Text>
 
         <TimeFilterSelector

@@ -8,8 +8,8 @@ export const positionService = {
     return response.data
   },
 
-  async getPosition(status: PositionStatus, ticket: number) {
-    const response = await http.get(`positions/${status}/${ticket}`)
+  async getPosition(status: PositionStatus, id: number) {
+    const response = await http.get(`positions/${status}/${id}`)
 
     return response.data
   },
