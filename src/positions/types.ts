@@ -1,6 +1,6 @@
 export interface Position {
   ticket: number;
-  position_id?: number;
+  position?: number;
   symbol: string;
   status: PositionStatus;
   type: string;

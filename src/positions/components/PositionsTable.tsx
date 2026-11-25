@@ -166,7 +166,7 @@ export function PositionsTable({ status }: Props) {
   ];
 
   const onPress = (item: Position) => {
-    navigate(`/trades/${status}/${item.position_id ?? item.ticket}`)
+    navigate(`/trades/${status}/${item.position ?? item.ticket}`)
 
     return
   }
