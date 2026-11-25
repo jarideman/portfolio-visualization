@@ -1,12 +1,32 @@
 # Setup
 
+### 1. Setup backend API
 Please set up [Data Engine](https://github.com/jarideman/data-engine) as a fully functional backend API.
 
 Start the Data Engine so the api can handle the requests
 
-Run `npm install`
+### 2. Configure environment variables
+**Windows:**
+```bash
+copy .env.example .env
+```
 
-Run `npm run dev`
+**Linux / macOS:**
+```bash
+cp .env.example .env
+```
+
+Fill in the required variables in `.env`.
+
+### 3. Install dependencies
+```bash
+npm install
+```
+
+### 4. Run the application
+```bash
+npm run dev
+```
 
 
 # Dashboard
